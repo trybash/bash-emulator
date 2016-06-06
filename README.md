@@ -1,3 +1,16 @@
+# bash-emulator
+
+[on npm](https://www.npmjs.com/package/bash-emulator)
+
+
+## LICENSE
+
+[MIT](/LICENSE)
+
+
+
+# Brainstorming below
+
 ## Flow
 - someone presses enter
 - app sends command string to emulator
