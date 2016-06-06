@@ -1,0 +1,45 @@
+<html>
+  <body>
+
+    <div>
+      <code id="output"></code>
+    </div>
+
+    <div>
+      <input id="input" type="text" />
+    </div>
+
+
+    <script src="bash-emulator.js"></script>
+    <script>
+      var input = document.getElementById('input')
+      var output = document.getElementById('output')
+      var emulator = bashEmulator('sample-emulator')
+
+      function log (result) {
+        output.innerHTML += result + '<br>'
+      }
+
+      function run (cmd) {
+        log('$ ' + cmd)
+        return emulator.run('pwd').then(log)
+      }
+
+      var ENTER = 13
+
+      input.addEventListener('keyup', function (e) {
+        if (e.which !== ENTER) return
+
+        run(input.value)
+          .then(function () {
+            input.value = ''
+          })
+      })
+
+      run('pwd')
+        .then(function () {
+          run('ls')
+        })
+    </script>
+  <body>
+<html>
