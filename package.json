@@ -1,0 +1,35 @@
+{
+  "name": "bash-emulator",
+  "version": "0.0.1",
+  "description": "Emulate a bash environment in plain js. Can be used in the browser.",
+  "main": "bash-emulator.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:trybash/bash-emulator.git"
+  },
+  "homepage": "https://trybash.github.io/bash-emulator",
+  "scripts": {
+    "test": "node bash-emulator.test.js"
+  },
+  "keywords": [
+    "bash",
+    "emulator",
+    "shell",
+    "simulator",
+    "browser",
+    "commandline",
+    "cli",
+    "linux",
+    "unix"
+  ],
+
+  "author": {
+    "name": "Jorin Vogel",
+    "email": "hi@jorin.me",
+    "url": "https://jorin.me"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "tape": "^4.5.1"
+  }
+}
