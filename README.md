@@ -11,43 +11,43 @@ The module exports one function that can be required from another module.
 Please use a tool like [webpack](https://webpack.github.io/) or [browserify](http://browserify.org/)
 for bundling and minification in your own workflow.
 
-`bashEmulator()`
+`bashEmulator() -> emulator`
   - Returns an `emulator` object
 
 ### `emulator`
 
-- `run(command)`
+- `run(command) -> Promise(output)`
   - `command` a bash command as string
   - Returns a `Promise` that resolves with an output string
-- `getDir()`
+- `getDir() -> Promise(path)`
   - Returns a Promise that resolves with the current working directory
-- `changeDir(path)`
+- `changeDir(path) -> Promise`
   - `path` relative path to set working directory to
   - Returns a Promise that resolves when change is done
-- `read(filePath)`
+- `read(filePath) -> Promise(content)`
   - `filePath` relative path of file to read
   - Returns a Promise that resolves with the content of the file
-- `readDir(path)`
+- `readDir(path) -> Promise([files])`
   - `path` optional, relative path of directory to read. Defaults to current directory.
   - Returns a Promise that resolves with an array listing all content of the directory
-- `getStats(path)`
+- `getStats(path) -> Promise(stats)`
   - `path` optional path of file or directory. Defaults to current directory.
   - Returns a Promise that resolves with a stats object. For now, only property is `lastEdited`.
-- `createDir(path)`
+- `createDir(path) -> Promise`
   - `path` relative, non-existed path for new directory
   - Returns a Promise that resolves when directory is created
-- `write(filePath)`
+- `write(filePath) -> Promise`
   - If file isn't empty, content is appended to it.
   - `filePath` path of file that should be written to. File doesn't have to exist.
   - Returns a Promise that resolves when writing is done
-- `remove(path)`
+- `remove(path) -> Promise`
   - `path` path of file or directory to be deleting
   - Returns a Promise that resolves when deleting is done
-- `getHistory()`
+- `getHistory() -> Promise([commands])`
   - Returns a Promise that resolves with a array containing all commands from the past
-- `clearScreen()`
+- `clearScreen() -> Promise`
   - Returns a Promise that resolves when clearing is done
-- `getDimensions()`
+- `getDimensions() -> Promise(dimensions)`
   - Returns a Promise with an dimensions object `{ x, y }`
 - `commands`
   - An object with all commands that the emulator knows of
