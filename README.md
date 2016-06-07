@@ -118,7 +118,7 @@ The API of the methods are designed to work with asynchronous implementations as
 - readline completion
 - killring
 
-### `builtin` - Built-in Commands
+### Built-in Commands
 
 - `ls; ls dir; ls -a; ls -l`
 - `cd; cd dir; cd ~/dir; cd ..`
