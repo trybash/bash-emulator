@@ -103,6 +103,7 @@ The API of the methods are designed to work with asynchronous implementations as
 
 - Setup project using `npm install`
 - Make sure tests are running using `npm test`
+- Build the `bash-emulator.min.js` file with `npm run build`
 
 
 ## Roadmap

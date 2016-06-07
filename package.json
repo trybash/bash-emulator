@@ -2,7 +2,7 @@
   "name": "bash-emulator",
   "version": "0.0.1",
   "description": "Emulate a bash environment in plain js. Can be used in the browser.",
-  "main": "bash-emulator.js",
+  "main": "src/index.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:trybash/bash-emulator.git"
@@ -10,7 +10,8 @@
   "homepage": "https://trybash.github.io/bash-emulator",
   "scripts": {
     "test": "npm run lint && node bash-emulator.test.js",
-    "lint": "standard"
+    "lint": "standard",
+    "build": "browserify src/browser-version.js > bash-emulator.min.js"
   },
   "keywords": [
     "bash",
@@ -30,6 +31,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "browserify": "^13.0.1",
     "standard": "^7.1.2",
     "tape": "^4.5.1"
   }

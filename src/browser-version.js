@@ -1,0 +1,1 @@
+window.bashEmulator = require('./index')
