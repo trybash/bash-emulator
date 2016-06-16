@@ -11,7 +11,8 @@ The module exports one function that can be required from another module.
 Please use a tool like [webpack](https://webpack.github.io/) or [browserify](http://browserify.org/)
 for bundling and minification in your own workflow.
 
-`bashEmulator() -> emulator`
+`bashEmulator(state) -> emulator`
+  - `state` an optional object to initialize the state. For shape [see below](#the-state-object)
   - Returns an `emulator` object
 
 ### `emulator`
@@ -36,7 +37,7 @@ for bundling and minification in your own workflow.
 - `createDir(path) -> Promise`
   - `path` relative, non-existed path for new directory
   - Returns a Promise that resolves when directory is created
-- `write(filePath) -> Promise`
+- `write(filePath, content) -> Promise`
   - If file isn't empty, content is appended to it.
   - `filePath` path of file that should be written to. File doesn't have to exist.
   - Returns a Promise that resolves when writing is done
@@ -52,24 +53,29 @@ for bundling and minification in your own workflow.
 - `commands`
   - An object with all commands that the emulator knows of
 - `state`
-  - `history`
-  - `fileSystem`
-  - `workingDirectory`
+  - [See below](#the-state-object)
+
+### The `state` object
+
+- `history` an array of strings containing previous commands
+- `workingDirectory` a string containing the current working directory
+- `fileSystem` an object that maps from absolute paths to directories or files.
+  - Each value has a `type` property thats either `'dir'` or `'file'`.
+    and a `lastEdited` property containing a unix timestamp
+  - Files also have a `content` property.
 
 
 ### Storing state in `localStorage`
 
 ``` js
-var state = JSON.parse(localStorage.bashEmulator || 'null')
-var emulator = bashEmulator()
-if (state) {
-  emulator.state = state
-}
+var state = JSON.parse(localStorage.bashEmulator || '{}')
+var emulator = bashEmulator(state)
 function saveState () {
   localStorage.bashEmulator = JSON.stringify(emulator.state)
 }
 emulator.run().then(saveState)
 ```
+
 
 ### Writing your own commands
 
@@ -91,6 +97,7 @@ emulator.commands.myCommand = function (env, args) {}
 - `args` array from command string. First element is command name.
 - Optionally return object to register handlers for events:
   `{ input: fn, close: fn }`
+
 
 ### Using a custom file system
 
@@ -117,6 +124,7 @@ The API of the methods are designed to work with asynchronous implementations as
 - readline shortcuts
 - readline completion
 - killring
+
 
 ### Built-in Commands
 
