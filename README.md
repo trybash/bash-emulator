@@ -12,7 +12,7 @@ Please use a tool like [webpack](https://webpack.github.io/) or [browserify](htt
 for bundling and minification in your own workflow.
 
 `bashEmulator(state) -> emulator`
-  - `state` an optional object to initialize the state. For shape [see below](#the-state-object)
+  - `state` an optional object to initialize the state. For shape [see below](#the-state-object).
   - Returns an `emulator` object
 
 ### `emulator`
@@ -60,7 +60,7 @@ for bundling and minification in your own workflow.
 - `history` an array of strings containing previous commands
 - `workingDirectory` a string containing the current working directory
 - `fileSystem` an object that maps from absolute paths to directories or files.
-  - Each value has a `type` property thats either `'dir'` or `'file'`.
+  - Each value has a `type` property thats either `'dir'` or `'file'`
     and a `lastEdited` property containing a unix timestamp
   - Files also have a `content` property.
 
@@ -115,15 +115,12 @@ The API of the methods are designed to work with asynchronous implementations as
 
 ## Roadmap
 
-- file system
-- history
-- path
+- test coverage
 - patterns for path expansion
 - pipes
 - basic logic
 - readline shortcuts
 - readline completion
-- killring
 
 
 ### Built-in Commands

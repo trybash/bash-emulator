@@ -43,15 +43,36 @@
     <script>
       var input = document.getElementById('input')
       var output = document.getElementById('output')
-      var emulator = bashEmulator('sample-emulator')
+      var emulator = bashEmulator({
+        workingDirectory: '/',
+        fileSystem: {
+          '/': {
+            type: 'dir',
+            lastEdited: Date.now()
+          },
+          '/README.txt': {
+            type: 'file',
+            lastEdited: Date.now(),
+            content: 'empty'
+          },
+          '/home': {
+            type: 'dir',
+            lastEdited: Date.now()
+          },
+          '/home/username': {
+            type: 'dir',
+            lastEdited: Date.now()
+          }
+        }
+      })
 
       function log (result) {
-        output.innerHTML += result + '<br>'
+        output.innerHTML += (result || '') + '<br>'
       }
 
       function run (cmd) {
         log('$ ' + cmd)
-        return emulator.run('pwd').then(log)
+        return emulator.run(cmd).then(log)
       }
 
       var ENTER = 13
