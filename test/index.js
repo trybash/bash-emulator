@@ -8,7 +8,7 @@ test('runs ls', function (t) {
 
   emulator.run('ls')
     .then(function (result) {
-      t.equal(result, 'ran ls')
+      t.equal(result, '')
     })
 })
 
