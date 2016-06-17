@@ -10,10 +10,10 @@
   "homepage": "https://trybash.github.io/bash-emulator",
   "scripts": {
     "build": "browserify src/browser-version.js > bash-emulator.min.js",
-    "test": "npm run lint && npm run cover",
+    "test": "node test/index.js",
     "lint": "standard",
-    "cover": "istanbul cover test/index.js && npm run check || npm run report",
-    "check": "istanbul check-coverage --branches 95",
+    "cover": "istanbul cover test/index.js && npm run report && npm run check",
+    "check": "istanbul check-coverage --statements 95",
     "report": "istanbul report html && echo 'For more see: coverage/index.html'"
   },
   "keywords": [

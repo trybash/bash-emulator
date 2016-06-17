@@ -125,11 +125,11 @@ The API of the methods are designed to work with asynchronous implementations as
 
 ### Built-in Commands
 
-- `ls; ls dir; ls -a; ls -l`
-- `cd; cd dir; cd ~/dir; cd ..`
+- `ls`
+- `cd`
 - `pwd`
 - `history`
-- `cat .secret.txt; cat f1 f2; cat dir/*`
+- `cat`
 - `clear`
 - `head`
 - `tail`
@@ -138,14 +138,8 @@ The API of the methods are designed to work with asynchronous implementations as
 - `cp`
 - `rm`
 - `touch`
-- `echo bla > file`
-- `;`
-- `>`
-- `>>>`
-- `<`
-- `&&`
-- `||`
-- `wc; wc -l; wc -c`
+- `echo`
+- `wc`
 - `sort`
 - `uniq`
 - `nl`

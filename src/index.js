@@ -11,8 +11,9 @@ function bashEmulator (initialState) {
       var args = input.split(' ')
       var cmd = args.shift()
       if (!commands[cmd]) {
-        return Promise.reject('not implemented yet')
+        return Promise.reject(cmd + ': command not found')
       }
+      state.history.push(cmd)
       return new Promise(function (resolve) {
         commands[cmd]({
           output: resolve,
@@ -29,32 +30,45 @@ function bashEmulator (initialState) {
       return Promise.resolve()
     },
     read: function (filePath) {
+      if (!state.fileSystem[filePath]) {
+        return Promise.reject(filePath + ': No such file or directory')
+      }
+      if (state.fileSystem[filePath].type !== 'file') {
+        return Promise.reject(filePath + ': Is a directory')
+      }
       return Promise.resolve(state.fileSystem[filePath].content)
     },
-    readDir: function (path) {
+    // readDir: function (path) {
       // TODO:
       // - `readDir(path) -> Promise([files])`
       //   - `path` optional, relative path of directory to read. Defaults to current directory.
       //   - Returns a Promise that resolves with an array listing all content of the directory
-    },
-    getStats: function (path) {
-      return Promise.resolve(state.fileSystem[path].meta)
-    },
-    createDir: function (path) {
+    // },
+    // getStats: function (path) {
+    //   return Promise.resolve(state.fileSystem[path].meta)
+    // },
+    // createDir: function (path) {
       // TODO:
       // - `createDir(path) -> Promise`
       //   - `path` relative, non-existed path for new directory
       //   - Returns a Promise that resolves when directory is created
-    },
-    write: function (filePath, content) {
+    // },
+    // write: function (filePath, content) {
       // TODO:
       // - `write(filePath) -> Promise`
       //   - If file isn't empty, content is appended to it.
       //   - `filePath` path of file that should be written to. File doesn't have to exist.
       //   - Returns a Promise that resolves when writing is done
-    },
+    // },
     remove: function (path) {
-      delete state.fileSystem[path]
+      if (!state.fileSystem[path]) {
+        return Promise.reject('cannot remove ‘' + path + '’: No such file or directory')
+      }
+      Object.keys(state.fileSystem).forEach(function (key) {
+        if (key.startsWith(path)) {
+          delete state.fileSystem[key]
+        }
+      })
       return Promise.resolve()
     },
     getHistory: function () {
