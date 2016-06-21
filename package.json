@@ -33,13 +33,15 @@
     "url": "https://jorin.me"
   },
   "license": "MIT",
+  "dependencies": {
+    "ramda": "^0.21.0",
+    "string.prototype.includes": "^1.0.0",
+    "string.prototype.startswith": "^0.2.0"
+  },
   "devDependencies": {
     "browserify": "^13.0.1",
     "istanbul": "^0.4.3",
-    "ramda": "^0.21.0",
     "standard": "^7.1.2",
-    "string.prototype.includes": "^1.0.0",
-    "string.prototype.startswith": "^0.2.0",
     "tape": "^4.5.1"
   }
 }
