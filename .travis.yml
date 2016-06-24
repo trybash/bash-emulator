@@ -1,3 +1,7 @@
 language: node_js # Node runs `npm install` and `npm test` automatically
-node_js: node # Uses the latest version (via nvm)
+node_js:
+  - node # Uses the latest version (via nvm)
 sudo: false # Allows Travis to run this project in container
+branches:
+  only:
+    - gh-pages # otherwise branch is ignored
