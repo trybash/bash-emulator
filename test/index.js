@@ -39,16 +39,34 @@ test('run missing command', function (t) {
 })
 
 test('change working directory', function (t) {
-  t.plan(2)
+  t.plan(5)
   var emulator = bashEmulator()
   emulator.getDir().then(function (dir) {
     t.equal(dir, '/home/username')
+  }).then(function () {
+    return emulator.changeDir('..')
+  }).then(function () {
+    return emulator.getDir()
+  }).then(function (dir) {
+    t.equal(dir, '/home')
   }).then(function () {
     return emulator.changeDir('/')
   }).then(function () {
     return emulator.getDir()
   }).then(function (dir) {
     t.equal(dir, '/')
+  }).then(function () {
+    return emulator.changeDir('home/username')
+  }).then(function () {
+    return emulator.getDir()
+  }).then(function (dir) {
+    t.equal(dir, '/home/username')
+  }).then(function () {
+    return emulator.changeDir('nonexistend')
+  }).then(function () {
+    return emulator.getDir()
+  }).then(null, function (err) {
+    t.equal(err, '/home/username/nonexistend: No such file or directory')
   })
 })
 
