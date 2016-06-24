@@ -11,6 +11,7 @@ test('initialise with state', function (t) {
   t.plan(1)
   var testState = {
     history: ['ls'],
+    user: 'test',
     workingDirectory: '/home/test',
     fileSystem: {
       '/': {
