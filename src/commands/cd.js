@@ -1,6 +1,11 @@
 function cd (env, args) {
-  env.system.state.workingDirectory = args[0]
-  env.exit()
+  env.system.changeDir(args[0]).then(
+    env.exit,
+    function (errorMessage) {
+      env.error(errorMessage)
+      env.exit(1)
+    }
+  )
 }
 
 module.exports = cd

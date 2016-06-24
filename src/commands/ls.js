@@ -6,14 +6,13 @@ function ls (env, args) {
   var cwd = state.workingDirectory
   var listing = Object.keys(state.fileSystem)
     .filter(function (path) {
-      return (
-        path.startsWith(cwd) &&
-        !path.substr(cwd.length).includes('/') &&
-        path !== cwd
-      )
+      return path.startsWith(cwd) && path !== cwd
     })
     .map(function (path) {
-      return path.substr(cwd.length)
+      return path.substr(cwd === '/' ? cwd.length : cwd.length + 1)
+    })
+    .filter(function (path) {
+      return !path.includes('/')
     })
   env.output(listing.join(' '))
   env.exit()
