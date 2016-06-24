@@ -26,6 +26,10 @@
       #input:focus {
         outline: none;
       }
+
+      .error {
+        color: red;
+      }
     </style>
   </head>
   <body>
@@ -70,9 +74,13 @@
         output.innerHTML += (result || '') + '<br>'
       }
 
+      function error (result) {
+        log('<div class="error">' + result + '</div>')
+      }
+
       function run (cmd) {
         log('$ ' + cmd)
-        return emulator.run(cmd).then(log)
+        return emulator.run(cmd).then(log, error)
       }
 
       var ENTER = 13
@@ -83,6 +91,7 @@
         run(input.value)
           .then(function () {
             input.value = ''
+            document.body.scrollTop = 10e6
           })
       })
 
