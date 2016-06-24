@@ -1,5 +1,7 @@
 function cd (env, args) {
-  env.system.changeDir(args[0]).then(
+  var path = args[0] || '/home/' + env.system.state.user
+
+  env.system.changeDir(path).then(
     env.exit,
     function (errorMessage) {
       env.error(errorMessage)

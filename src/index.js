@@ -147,6 +147,7 @@ function defaultState () {
         lastEdited: Date.now()
       }
     },
+    user: 'username',
     workingDirectory: '/home/username'
   }
 }
