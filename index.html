@@ -63,7 +63,12 @@
             type: 'dir',
             lastEdited: Date.now()
           },
-          '/home/username': {
+          '/home/user/journal.txt': {
+            type: 'file',
+            lastEdited: Date.now(),
+            content: 'this is private!'
+          },
+          '/home/user': {
             type: 'dir',
             lastEdited: Date.now()
           }
@@ -86,19 +91,18 @@
       var ENTER = 13
 
       input.addEventListener('keyup', function (e) {
-        if (e.which !== ENTER) return
-
-        run(input.value)
-          .then(function () {
-            input.value = ''
-            document.body.scrollTop = 10e6
-          })
+        if (e.which !== ENTER) {
+          return
+        }
+        run(input.value).then(function () {
+          input.value = ''
+          document.body.scrollTop = 10e6
+        })
       })
 
-      run('pwd')
-        .then(function () {
-          run('ls')
-        })
+      run('pwd').then(function () {
+        run('ls')
+      })
     </script>
   <body>
 <html>
