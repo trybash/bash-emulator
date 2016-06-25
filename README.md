@@ -21,9 +21,7 @@ for bundling and minification in your own workflow.
 
 - `run(command) -> Promise(output, code)`
   - `command` a bash command as string
-  - Returns a `Promise` that resolves with an output string and an exit code.
-    When the promise is resolved, `code` is always `0`.
-    On rejection it's non-zero.
+  - Returns a `Promise` that resolves with an output string.
 - `getDir() -> Promise(path)`
   - Returns a Promise that resolves with the current working directory
 - `changeDir(path) -> Promise`

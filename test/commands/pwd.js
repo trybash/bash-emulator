@@ -8,7 +8,7 @@ test('pwd', function (t) {
   }
   var emulator = bashEmulator(testState)
   emulator.run('pwd').then(function (dir) {
-    t.equal(dir, '/')
+    t.equal(dir, '/', 'returns working directory')
   })
 })
 

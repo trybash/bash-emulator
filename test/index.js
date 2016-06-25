@@ -4,7 +4,7 @@ var bashEmulator = require('../src')
 test('initialise', function (t) {
   t.plan(1)
   var emulator = bashEmulator()
-  t.equal(typeof emulator, 'object')
+  t.equal(typeof emulator, 'object', 'emulator is an object')
 })
 
 test('initialise with state', function (t) {
@@ -29,13 +29,13 @@ test('initialise with state', function (t) {
     }
   }
   var emulator = bashEmulator(testState)
-  t.deepEqual(emulator.state, testState)
+  t.deepEqual(emulator.state, testState, 'emulator uses initial state')
 })
 
 test('run missing command', function (t) {
   t.plan(1)
   bashEmulator().run('nonexistend').then(null, function (err) {
-    t.equals(err, 'nonexistend: command not found')
+    t.equals(err, 'nonexistend: command not found', 'error when running missing comand')
   })
 })
 
@@ -43,29 +43,29 @@ test('change working directory', function (t) {
   t.plan(5)
   var emulator = bashEmulator()
   emulator.getDir().then(function (dir) {
-    t.equal(dir, '/home/username')
+    t.equal(dir, '/home/user', 'initial WD matches')
   }).then(function () {
     return emulator.changeDir('..')
   }).then(function () {
     return emulator.getDir()
   }).then(function (dir) {
-    t.equal(dir, '/home')
+    t.equal(dir, '/home', 'changes dir with ..')
   }).then(function () {
     return emulator.changeDir('/')
   }).then(function () {
     return emulator.getDir()
   }).then(function (dir) {
-    t.equal(dir, '/')
+    t.equal(dir, '/', 'changes dir with absolute path')
   }).then(function () {
-    return emulator.changeDir('home/username')
+    return emulator.changeDir('home/user')
   }).then(function () {
     return emulator.getDir()
   }).then(function (dir) {
-    t.equal(dir, '/home/username')
+    t.equal(dir, '/home/user', 'changes dir with chained path')
   }).then(function () {
     return emulator.changeDir('nonexistend')
   }).then(null, function (err) {
-    t.equal(err, '/home/username/nonexistend: No such file or directory')
+    t.equal(err, '/home/user/nonexistend: No such file or directory', 'cannot change to non-existend dir')
   })
 })
 
@@ -73,13 +73,13 @@ test('update history', function (t) {
   t.plan(2)
   var emulator = bashEmulator()
   emulator.getHistory().then(function (history) {
-    t.deepEqual(history, [])
+    t.deepEqual(history, [], 'history is empty')
   }).then(function () {
-    return emulator.run('ls')
+    return emulator.run('ls /')
   }).then(function () {
     return emulator.getHistory()
   }).then(function (history) {
-    t.deepEqual(history, ['ls'])
+    t.deepEqual(history, ['ls /'], 'command get appended to history')
   })
 })
 
@@ -102,13 +102,13 @@ test('reading files', function (t) {
   }
   var emulator = bashEmulator(testState)
   emulator.read('/nonexistend').then(null, function (err) {
-    t.equal(err, '/nonexistend: No such file or directory')
+    t.equal(err, '/nonexistend: No such file or directory', 'cannot read missing file')
   })
   emulator.read('/').then(null, function (err) {
-    t.equal(err, '/: Is a directory')
+    t.equal(err, '/: Is a directory', 'cannot read content of directory')
   })
   emulator.read('/log.txt').then(function (content) {
-    t.equal(content, 'some log')
+    t.equal(content, 'some log', 'read content of a file')
   })
 })
 
@@ -139,14 +139,20 @@ test('removing', function (t) {
   }
   var emulator = bashEmulator(testState)
   emulator.remove('/nonexistend').then(null, function (err) {
-    t.equal(err, 'cannot remove ‘/nonexistend’: No such file or directory')
+    t.equal(err, 'cannot remove ‘/nonexistend’: No such file or directory', 'cannot remove non-existend file')
   })
   emulator.remove('/log.txt').then(function () {
-    t.equal(emulator.state.fileSystem['/log.txt'], undefined)
+    return emulator.remove('/log.txt')
+  }).then(null, function () {
+    t.ok(true, 'file is deleted')
   })
   emulator.remove('/home').then(function () {
-    t.equal(emulator.state.fileSystem['/home'], undefined)
-    t.equal(emulator.state.fileSystem['/home/test'], undefined)
+    emulator.remove('/home').then(null, function () {
+      t.ok(true, 'directory is deleted')
+    })
+    emulator.remove('/home/test').then(null, function () {
+      t.ok(true, 'sub-directory is deleted')
+    })
   })
 })
 

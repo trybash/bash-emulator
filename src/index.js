@@ -22,14 +22,16 @@ function bashEmulator (initialState) {
           output: function (str) {
             result += str
           },
+          // NOTE: For now we just redirect stderr to stdout
           error: function (str) {
             result += str
           },
+          // NOTE: For now we don't use specific error codes
           exit: function (code) {
             if (code) {
-              reject(result, code)
+              reject(result)
             } else {
-              resolve(result, code)
+              resolve(result)
             }
           },
           system: emulator
@@ -42,30 +44,10 @@ function bashEmulator (initialState) {
     },
 
     changeDir: function (target) {
-      var path = (target.charAt(0) === '/' ? '' : state.workingDirectory + '/') + target
-      var parts = path.split('/').filter(function noEmpty (p) {
-        return !!p
-      })
-      // Thanks to nodejs' path.join algorithm
-      var up = 0
-      for (var i = parts.length - 1; i >= 0; i--) {
-        var part = parts[i]
-        if (part === '.') {
-          parts.splice(i, 1)
-        } else if (part === '..') {
-          parts.splice(i, 1)
-          up++
-        } else if (up) {
-          parts.splice(i, 1)
-          up--
-        }
-      }
-      var normalizedPath = '/' + parts.join('/')
-
+      var normalizedPath = joinPaths(state.workingDirectory, target)
       if (!state.fileSystem[normalizedPath]) {
         return Promise.reject(normalizedPath + ': No such file or directory')
       }
-
       state.workingDirectory = normalizedPath
       return Promise.resolve()
     },
@@ -79,13 +61,6 @@ function bashEmulator (initialState) {
       }
       return Promise.resolve(state.fileSystem[filePath].content)
     },
-
-    // readDir: function (path) {
-      // TODO:
-      // - `readDir(path) -> Promise([files])`
-      //   - `path` optional, relative path of directory to read. Defaults to current directory.
-      //   - Returns a Promise that resolves with an array listing all content of the directory
-    // },
 
     // getStats: function (path) {
     //   return Promise.resolve(state.fileSystem[path].meta)
@@ -150,6 +125,28 @@ function defaultState () {
     user: 'user',
     workingDirectory: '/home/user'
   }
+}
+
+function joinPaths (a, b) {
+  var path = (b.charAt(0) === '/' ? '' : a + '/') + b
+  var parts = path.split('/').filter(function noEmpty (p) {
+    return !!p
+  })
+  // Thanks to nodejs' path.join algorithm
+  var up = 0
+  for (var i = parts.length - 1; i >= 0; i--) {
+    var part = parts[i]
+    if (part === '.') {
+      parts.splice(i, 1)
+    } else if (part === '..') {
+      parts.splice(i, 1)
+      up++
+    } else if (up) {
+      parts.splice(i, 1)
+      up--
+    }
+  }
+  return '/' + parts.join('/')
 }
 
 module.exports = bashEmulator

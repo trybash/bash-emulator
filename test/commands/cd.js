@@ -26,17 +26,17 @@ test('cd', function (t) {
   emulator.run('cd').then(function () {
     return emulator.getDir()
   }).then(function (dir) {
-    t.equal(dir, '/home/test')
+    t.equal(dir, '/home/test', 'go to users\'s home')
   }).then(function () {
     return emulator.run('cd /home')
   }).then(function () {
     return emulator.getDir()
   }).then(function (dir) {
-    t.equal(dir, '/home')
+    t.equal(dir, '/home', 'absolute path')
   }).then(function () {
     return emulator.run('cd nonexistend')
   }).then(null, function (err) {
-    t.equal(err, '/home/nonexistend: No such file or directory')
+    t.equal(err, '/home/nonexistend: No such file or directory', 'error message')
   })
 })
 
