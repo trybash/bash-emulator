@@ -64,8 +64,6 @@ test('change working directory', function (t) {
     t.equal(dir, '/home/username')
   }).then(function () {
     return emulator.changeDir('nonexistend')
-  }).then(function () {
-    return emulator.getDir()
   }).then(null, function (err) {
     t.equal(err, '/home/username/nonexistend: No such file or directory')
   })
@@ -152,3 +150,7 @@ test('removing', function (t) {
   })
 })
 
+//
+// running sub tests
+//
+require('./commands/cd')
