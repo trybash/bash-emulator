@@ -40,7 +40,7 @@ test('run missing command', function (t) {
 })
 
 test('change working directory', function (t) {
-  t.plan(5)
+  t.plan(6)
   var emulator = bashEmulator()
   emulator.getDir().then(function (dir) {
     t.equal(dir, '/home/user', 'initial WD matches')
@@ -50,6 +50,12 @@ test('change working directory', function (t) {
     return emulator.getDir()
   }).then(function (dir) {
     t.equal(dir, '/home', 'changes dir with ..')
+  }).then(function () {
+    return emulator.changeDir('./user')
+  }).then(function () {
+    return emulator.getDir()
+  }).then(function (dir) {
+    t.equal(dir, '/home/user', 'changes dir with relative path')
   }).then(function () {
     return emulator.changeDir('/')
   }).then(function () {
@@ -111,6 +117,12 @@ test('reading files', function (t) {
     t.equal(content, 'some log', 'read content of a file')
   })
 })
+
+// test('reading a directory\'s content', function (t) {
+//   t.plan(1)
+//   var emulator = bashEmulator()
+//   emulator.readDir('/home')
+// })
 
 test('removing', function (t) {
   t.plan(4)
