@@ -19,9 +19,11 @@ for bundling and minification in your own workflow.
 
 ### `emulator`
 
-- `run(command) -> Promise(output)`
+- `run(command) -> Promise(output, code)`
   - `command` a bash command as string
-  - Returns a `Promise` that resolves with an output string
+  - Returns a `Promise` that resolves with an output string and an exit code.
+    When the promise is resolved, `code` is always `0`.
+    On rejection it's non-zero.
 - `getDir() -> Promise(path)`
   - Returns a Promise that resolves with the current working directory
 - `changeDir(path) -> Promise`
@@ -59,7 +61,7 @@ for bundling and minification in your own workflow.
 
 ### The `state` object
 
-__It's not recommended to access the state directly. use the above defined helper methods instead.__
+__It's not recommended to access the state directly. Use the above defined helper methods instead.__
 
 - `history` an array of strings containing previous commands
 - `user` name of the current user (defaults to `user`)
@@ -97,6 +99,7 @@ emulator.commands.myCommand = function (env, args) {}
 
 - `env` object with:
   - `output(string)` call to write a string to stdout
+  - `error(string)` call to write a string to stderr
   - `exit(code)` call to exit command.
     - `code` integer to mark state of exit. Failure when not `0` (optional)
   - `system` reference to the emulator object.

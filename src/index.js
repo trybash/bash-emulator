@@ -142,13 +142,13 @@ function defaultState () {
         type: 'dir',
         lastEdited: Date.now()
       },
-      '/home/username': {
+      '/home/user': {
         type: 'dir',
         lastEdited: Date.now()
       }
     },
-    user: 'username',
-    workingDirectory: '/home/username'
+    user: 'user',
+    workingDirectory: '/home/user'
   }
 }
 
