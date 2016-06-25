@@ -1,6 +1,8 @@
 function pwd (env, args) {
-  env.output(env.system.state.workingDirectory)
-  env.exit()
+  env.system.getDir().then(function (dir) {
+    env.output(dir)
+    env.exit()
+  })
 }
 
 module.exports = pwd

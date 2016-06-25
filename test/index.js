@@ -153,4 +153,5 @@ test('removing', function (t) {
 //
 // running sub tests
 //
+require('./commands/pwd')
 require('./commands/cd')
