@@ -59,12 +59,16 @@ for bundling and minification in your own workflow.
 
 ### The `state` object
 
+__It's not recommended to access the state directly. use the above defined helper methods instead.__
+
 - `history` an array of strings containing previous commands
-- `workingDirectory` a string containing the current working directory
+- `user` name of the current user (defaults to `user`)
+- `workingDirectory` a string containing the current working directory (defaults to `/home/user`)
 - `fileSystem` an object that maps from absolute paths to directories or files.
   - Each value has a `type` property thats either `'dir'` or `'file'`
     and a `lastEdited` property containing a unix timestamp
   - Files also have a `content` property.
+  - Default file system contains only directories for `/home/user`
 
 
 ### Storing state in `localStorage`
@@ -121,6 +125,7 @@ The API of the methods are designed to work with asynchronous implementations as
 - patterns for path expansion
 - pipes
 - basic logic
+- simlinks
 - readline shortcuts
 - readline completion
 
