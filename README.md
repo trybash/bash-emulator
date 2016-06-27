@@ -32,7 +32,7 @@ for bundling and minification in your own workflow.
   - Returns a Promise that resolves with the content of the file
 - `readDir(path) -> Promise([files])`
   - `path` optional, relative path of directory to read. Defaults to current directory.
-  - Returns a Promise that resolves with an array listing all content of the directory
+  - Returns a Promise that resolves with an array of file names.
 - `getStats(path) -> Promise(stats)`
   - `path` optional path of file or directory. Defaults to current directory.
   - Returns a Promise that resolves with a stats object. For now, only property is `lastEdited`.

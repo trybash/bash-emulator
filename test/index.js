@@ -118,11 +118,43 @@ test('reading files', function (t) {
   })
 })
 
-// test('reading a directory\'s content', function (t) {
-//   t.plan(1)
-//   var emulator = bashEmulator()
-//   emulator.readDir('/home')
-// })
+test('reading a directory\'s content', function (t) {
+  t.plan(3)
+  var emulator = bashEmulator({
+    fileSystem: {
+      '/': {
+        type: 'dir',
+        lastEdited: Date.now()
+      },
+      '/home': {
+        type: 'dir',
+        lastEdited: Date.now()
+      },
+      '/home/user': {
+        type: 'dir',
+        lastEdited: Date.now()
+      },
+      '/etc': {
+        type: 'dir',
+        lastEdited: Date.now()
+      },
+      '/tmp.log': {
+        type: 'file',
+        lastEdited: Date.now(),
+        content: 'log'
+      }
+    }
+  })
+  emulator.readDir('/home/user').then(function (listing) {
+    t.deepEqual(listing, [], 'lists empty')
+  })
+  emulator.readDir('..').then(function (listing) {
+    t.deepEqual(listing, ['user'], 'lists folder')
+  })
+  emulator.readDir('/').then(function (listing) {
+    t.deepEqual(listing, ['etc', 'home', 'tmp.log'], 'lists in order')
+  })
+})
 
 test('removing', function (t) {
   t.plan(4)

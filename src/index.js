@@ -4,6 +4,10 @@ var commands = require('./commands')
 
 function bashEmulator (initialState) {
   var state = createState(initialState)
+  function getPath (path) {
+    return joinPaths(state.workingDirectory, path)
+  }
+
   var emulator = {
     commands: commands,
 
@@ -44,7 +48,7 @@ function bashEmulator (initialState) {
     },
 
     changeDir: function (target) {
-      var normalizedPath = joinPaths(state.workingDirectory, target)
+      var normalizedPath = getPath(target)
       if (!state.fileSystem[normalizedPath]) {
         return Promise.reject(normalizedPath + ': No such file or directory')
       }
@@ -60,6 +64,22 @@ function bashEmulator (initialState) {
         return Promise.reject(filePath + ': Is a directory')
       }
       return Promise.resolve(state.fileSystem[filePath].content)
+    },
+
+    readDir: function (path) {
+      var dir = getPath(path)
+      var listing = Object.keys(state.fileSystem)
+        .filter(function (path) {
+          return path.startsWith(dir) && path !== dir
+        })
+        .map(function (path) {
+          return path.substr(dir === '/' ? dir.length : dir.length + 1)
+        })
+        .filter(function (path) {
+          return !path.includes('/')
+        })
+        .sort()
+      return Promise.resolve(listing)
     },
 
     // getStats: function (path) {
