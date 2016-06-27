@@ -26,6 +26,9 @@ function ls (env, args) {
   task.then(function (result) {
     env.output(result)
     env.exit()
+  }, function (err) {
+    env.output('ls: ' + err)
+    env.exit(2)
   })
 }
 

@@ -2,7 +2,7 @@ var test = require('tape')
 var bashEmulator = require('../../src')
 
 test('ls', function (t) {
-  t.plan(3)
+  t.plan(4)
   var testState = {
     history: [],
     user: 'test',
@@ -49,6 +49,9 @@ test('ls', function (t) {
       '\n' +
       'test'
     t.equal(output, listing, 'list multiple')
+  })
+  emulator.run('ls nonexistend').then(null, function (err) {
+    t.equal(err, 'ls: cannot access nonexistend: No such file or directory', 'missing dir')
   })
 })
 

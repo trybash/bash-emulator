@@ -119,7 +119,7 @@ test('reading files', function (t) {
 })
 
 test('reading a directory\'s content', function (t) {
-  t.plan(3)
+  t.plan(4)
   var emulator = bashEmulator({
     fileSystem: {
       '/': {
@@ -153,6 +153,9 @@ test('reading a directory\'s content', function (t) {
   })
   emulator.readDir('/').then(function (listing) {
     t.deepEqual(listing, ['etc', 'home', 'tmp.log'], 'lists in order')
+  })
+  emulator.readDir('nonexistend').then(null, function (err) {
+    t.equal(err, 'cannot access nonexistend: No such file or directory', 'error for missing file')
   })
 })
 
@@ -204,4 +207,5 @@ test('removing', function (t) {
 // running sub tests
 //
 require('./commands/pwd')
+require('./commands/ls')
 require('./commands/cd')
