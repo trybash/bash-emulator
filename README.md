@@ -122,7 +122,6 @@ The API of the methods are designed to work with asynchronous implementations as
 
 ## Roadmap
 
-- test coverage
 - patterns for path expansion
 - pipes
 - basic logic
@@ -133,26 +132,26 @@ The API of the methods are designed to work with asynchronous implementations as
 
 ### Built-in Commands
 
-- `ls`
-- `cd`
-- `pwd`
-- `history`
-- `cat`
-- `clear`
-- `head`
-- `tail`
-- `mkdir`
-- `mv`
-- `cp`
-- `rm`
-- `touch`
-- `echo`
-- `wc`
-- `sort`
-- `uniq`
-- `nl`
-- `tac`
-- `less`
+- [x] `ls`
+- [x] `cd`
+- [x] `pwd`
+- [ ] `history`
+- [ ] `cat`
+- [ ] `clear`
+- [ ] `head`
+- [ ] `tail`
+- [ ] `mkdir`
+- [ ] `mv`
+- [ ] `cp`
+- [ ] `rm`
+- [ ] `touch`
+- [ ] `echo`
+- [ ] `wc`
+- [ ] `sort`
+- [ ] `uniq`
+- [ ] `nl`
+- [ ] `tac`
+- [ ] `less`
 
 
 ## Browser Support
