@@ -209,3 +209,4 @@ test('removing', function (t) {
 require('./commands/pwd')
 require('./commands/ls')
 require('./commands/cd')
+require('./commands/history')

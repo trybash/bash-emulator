@@ -122,12 +122,13 @@ The API of the methods are designed to work with asynchronous implementations as
 
 ## Roadmap
 
+- up and down arrows
+- readline completion
 - patterns for path expansion
 - pipes
 - basic logic
 - simlinks
 - readline shortcuts
-- readline completion
 
 
 ### Built-in Commands
@@ -135,7 +136,7 @@ The API of the methods are designed to work with asynchronous implementations as
 - [x] `ls`
 - [x] `cd`
 - [x] `pwd`
-- [ ] `history`
+- [x] `history`
 - [ ] `cat`
 - [ ] `clear`
 - [ ] `head`
