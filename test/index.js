@@ -90,7 +90,7 @@ test('update history', function (t) {
 })
 
 test('reading files', function (t) {
-  t.plan(3)
+  t.plan(4)
   var testState = {
     history: [],
     workingDirectory: '/',
@@ -107,14 +107,17 @@ test('reading files', function (t) {
     }
   }
   var emulator = bashEmulator(testState)
-  emulator.read('/nonexistend').then(null, function (err) {
-    t.equal(err, '/nonexistend: No such file or directory', 'cannot read missing file')
+  emulator.read('nonexistend').then(null, function (err) {
+    t.equal(err, 'nonexistend: No such file or directory', 'cannot read missing file')
   })
   emulator.read('/').then(null, function (err) {
     t.equal(err, '/: Is a directory', 'cannot read content of directory')
   })
   emulator.read('/log.txt').then(function (content) {
     t.equal(content, 'some log', 'read content of a file')
+  })
+  emulator.read('log.txt').then(function (content) {
+    t.equal(content, 'some log', 'with relative path')
   })
 })
 
@@ -210,3 +213,4 @@ require('./commands/pwd')
 require('./commands/ls')
 require('./commands/cd')
 require('./commands/history')
+require('./commands/cat')

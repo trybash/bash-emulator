@@ -56,12 +56,13 @@ function bashEmulator (initialState) {
       return Promise.resolve()
     },
 
-    read: function (filePath) {
+    read: function (arg) {
+      var filePath = getPath(arg)
       if (!state.fileSystem[filePath]) {
-        return Promise.reject(filePath + ': No such file or directory')
+        return Promise.reject(arg + ': No such file or directory')
       }
       if (state.fileSystem[filePath].type !== 'file') {
-        return Promise.reject(filePath + ': Is a directory')
+        return Promise.reject(arg + ': Is a directory')
       }
       return Promise.resolve(state.fileSystem[filePath].content)
     },
