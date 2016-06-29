@@ -36,6 +36,7 @@
   "dependencies": {
     "ramda": "^0.21.0",
     "string.prototype.includes": "^1.0.0",
+    "string.prototype.repeat": "^0.2.0",
     "string.prototype.startswith": "^0.2.0"
   },
   "devDependencies": {

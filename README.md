@@ -137,7 +137,7 @@ The API of the methods are designed to work with asynchronous implementations as
 - [x] `cd`
 - [x] `pwd`
 - [x] `history`
-- [ ] `cat`
+- [x] `cat`
 - [ ] `clear`
 - [ ] `head`
 - [ ] `tail`
