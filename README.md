@@ -3,9 +3,12 @@
 [![Build Status](https://travis-ci.org/trybash/bash-emulator.svg?branch=gh-pages)](https://travis-ci.org/trybash/bash-emulator) [![on npm](https://img.shields.io/npm/v/bash-emulator.svg)](https://www.npmjs.com/package/bash-emulator)
 
 This module can help you if you like to emulate a bash shell in plain Javascript.
-This might be useful for education purposes or even to ease the interaction with some back-end system.
+
+This might be useful for education purposes or even to ease the interaction with a back-end system.
+
 `bash-emulator` implements an environment for bash commands to run in and it also includes some default commands.
-The system can doesn't handle any UI interaction but provides hooks to communicate with other systems.
+
+The system doesn't handle any UI interaction but provides hooks to communicate with other systems.
 It's easy to add new commands and customize the underlying file system.
 
 
