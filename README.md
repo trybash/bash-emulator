@@ -2,9 +2,10 @@
 
 [![Build Status](https://travis-ci.org/trybash/bash-emulator.svg?branch=gh-pages)](https://travis-ci.org/trybash/bash-emulator)
 
-[![on npm](https://upload.wikimedia.org/wikipedia/commons/d/db/Npm-logo.svg)](https://www.npmjs.com/package/bash-emulator)
+[![on npm](https://img.shields.io/npm/v/bash-emulator.svg)](https://www.npmjs.com/package/bash-emulator)
 
-TODO: intro
+
+
 
 
 ## Usage
