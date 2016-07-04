@@ -146,28 +146,39 @@ The API of the methods are designed to work with asynchronous implementations as
 - readline shortcuts
 
 
-### Built-in Commands
+### Built-in commands and flags
 
 - [x] `ls`
+    - [ ] `-l`
+    - [ ] `-a`
 - [x] `cd`
 - [x] `pwd`
 - [x] `history`
 - [x] `cat`
+    - [ ] `-n`
 - [ ] `clear`
-- [ ] `head`
-- [ ] `tail`
 - [ ] `mkdir`
+    - [ ] `-p`
 - [ ] `mv`
 - [ ] `cp`
+    - [ ] `-r`
 - [ ] `rm`
-- [ ] `touch`
+    - [ ] `-r`
+- [ ] `rmdir`
+
+#### Future
+
 - [ ] `echo`
+- [ ] `touch`
+- [ ] `head`
+- [ ] `tail`
 - [ ] `wc`
 - [ ] `sort`
 - [ ] `uniq`
 - [ ] `nl`
 - [ ] `tac`
 - [ ] `less`
+- [ ] `man`
 
 
 ## Browser Support
