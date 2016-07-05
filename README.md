@@ -77,7 +77,7 @@ for bundling and minification in your own workflow.
 __It's not recommended to access the state directly. Use the above defined helper methods instead.__
 
 - `history` an array of strings containing previous commands
-- `user` name of the current user (defaults to `user`)
+- `user` name of the current user (defaults to `"user"`)
 - `workingDirectory` a string containing the current working directory (defaults to `/home/user`)
 - `fileSystem` an object that maps from absolute paths to directories or files.
   - Each value has a `type` property thats either `'dir'` or `'file'`

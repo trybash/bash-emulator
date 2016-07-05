@@ -9,7 +9,7 @@ test('history', function (t) {
   }).then(null, function () {
     return emulator.run('history')
   }).then(function (history) {
-    t.equal(history, '1 pwd\n2 nonexistend cmd\n3 history', 'appends to history')
+    t.equal(history, '    1  pwd\n    2  nonexistend cmd\n    3  history', 'appends to history')
   })
 
   var emulatorLong = bashEmulator({
@@ -17,17 +17,17 @@ test('history', function (t) {
   })
   emulatorLong.run('history').then(function (history) {
     var res =
-    ' 1 ls\n' +
-    ' 2 ls\n' +
-    ' 3 ls\n' +
-    ' 4 ls\n' +
-    ' 5 ls\n' +
-    ' 6 ls\n' +
-    ' 7 ls\n' +
-    ' 8 ls\n' +
-    ' 9 ls\n' +
-    '10 ls\n' +
-    '11 history'
+    '    1  ls\n' +
+    '    2  ls\n' +
+    '    3  ls\n' +
+    '    4  ls\n' +
+    '    5  ls\n' +
+    '    6  ls\n' +
+    '    7  ls\n' +
+    '    8  ls\n' +
+    '    9  ls\n' +
+    '   10  ls\n' +
+    '   11  history'
     t.equal(history, res, 'formats history')
   })
 })
