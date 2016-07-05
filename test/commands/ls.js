@@ -2,7 +2,8 @@ var test = require('tape')
 var bashEmulator = require('../../src')
 
 test('ls', function (t) {
-  t.plan(4)
+  t.plan(6)
+
   var testState = {
     history: [],
     user: 'test',
@@ -28,16 +29,24 @@ test('ls', function (t) {
         type: 'file',
         lastEdited: Date.now(),
         content: 'read this first'
+      },
+      '/home/test/.secret': {
+        type: 'file',
+        lastEdited: Date.now(),
+        content: 'this file is hidden'
       }
     }
   }
   var emulator = bashEmulator(testState)
+
   emulator.run('ls').then(function (output) {
     t.equal(output, 'etc home', 'without args')
   })
+
   emulator.run('ls home').then(function (output) {
     t.equal(output, 'test', 'list dir')
   })
+
   emulator.run('ls home /').then(function (output) {
     var listing =
       '/:' +
@@ -50,8 +59,17 @@ test('ls', function (t) {
       'test'
     t.equal(output, listing, 'list multiple')
   })
+
   emulator.run('ls nonexistend').then(null, function (err) {
     t.equal(err, 'ls: cannot access nonexistend: No such file or directory', 'missing dir')
+  })
+
+  emulator.run('ls /home/test').then(function (output) {
+    t.equal(output, 'README', 'list without hidden files')
+  })
+
+  emulator.run('ls -a /home/test').then(function (output) {
+    t.equal(output, '.secret README', 'la -a -> hidden files')
   })
 })
 

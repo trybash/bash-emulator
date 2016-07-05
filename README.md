@@ -150,13 +150,13 @@ The API of the methods are designed to work with asynchronous implementations as
 
 - [x] `ls`
     - [ ] `-l`
-    - [ ] `-a`
+    - [x] `-a`
 - [x] `cd`
 - [x] `pwd`
 - [x] `history`
 - [x] `cat`
-    - [ ] `-n`
-- [ ] `clear`
+    - [x] `-n`
+- [x] `clear`
 - [ ] `mkdir`
     - [ ] `-p`
 - [ ] `mv`
@@ -177,6 +177,7 @@ The API of the methods are designed to work with asynchronous implementations as
 - [ ] `uniq`
 - [ ] `nl`
 - [ ] `tac`
+- [ ] `ln`
 - [ ] `less`
 - [ ] `man`
 

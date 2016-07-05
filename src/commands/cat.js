@@ -19,7 +19,9 @@ function cat (env, args) {
       return 'cat: ' + err
     })
   })).then(function (contents) {
-    if (!showNumbers) return contents
+    if (!showNumbers) {
+      return contents
+    }
     return addLineNumbers(numColumnWidth, contents)
   }).then(function (contents) {
     env.output(contents.join('\n'))

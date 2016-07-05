@@ -152,6 +152,9 @@ function defaultState () {
 }
 
 function joinPaths (a, b) {
+  if (!b) {
+    return a
+  }
   var path = (b.charAt(0) === '/' ? '' : a + '/') + b
   var parts = path.split('/').filter(function noEmpty (p) {
     return !!p
