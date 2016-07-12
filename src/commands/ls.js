@@ -1,6 +1,3 @@
-require('string.prototype.startswith')
-require('string.prototype.includes')
-
 // NOTE: No support for files yet
 function ls (env, args) {
   var aFlagIndex = args.findIndex(function (arg) {

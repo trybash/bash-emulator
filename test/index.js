@@ -206,6 +206,52 @@ test('removing', function (t) {
   })
 })
 
+test('completion', function (t) {
+  t.plan(10)
+
+  var emulator = bashEmulator({
+    history: [
+      'cd /home/user',
+      'ls ..',
+      'pwd',
+      'ls',
+      'ls test',
+      'ls ..'
+    ]
+  })
+
+  emulator.completeDown('ls').then(function (completion) {
+    t.equal(completion, undefined, 'cannot go down')
+    return emulator.completeUp('ls')
+  }).then(function (completion) {
+    t.equal(completion, 'ls ..', 'goes up')
+    return emulator.completeUp('ls')
+  }).then(function (completion) {
+    t.equal(completion, 'ls test', 'goes up twice')
+    return emulator.completeUp('ls')
+  }).then(function (completion) {
+    t.equal(completion, 'ls', 'includes base command too')
+    return emulator.completeUp('ls')
+  }).then(function (completion) {
+    t.equal(completion, 'ls ..', 'commands can occur multiple times')
+    return emulator.completeUp('ls')
+  }).then(function (completion) {
+    t.equal(completion, undefined, 'completion can be exhausted')
+    return emulator.completeUp('ls')
+  }).then(function (completion) {
+    t.equal(completion, undefined, 'completion index stops with exhaustion')
+    return emulator.completeDown('ls')
+  }).then(function (completion) {
+    t.equal(completion, 'ls', 'can go down again')
+    return emulator.completeUp('cd /hom')
+  }).then(function (completion) {
+    t.equal(completion, 'cd /home/user', 'complete other command')
+    return emulator.completeUp('ls')
+  }).then(function (completion) {
+    t.equal(completion, 'ls ..', 'completion is reset after command change')
+  })
+})
+
 //
 // running sub tests
 //

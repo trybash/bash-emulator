@@ -1,4 +1,3 @@
-require('array.prototype.findindex')
 var addLineNumbers = require('../utils/lineNumber')
 
 var numColumnWidth = 6

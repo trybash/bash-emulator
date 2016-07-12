@@ -76,6 +76,10 @@
         }
       })
 
+      var ENTER = 13
+      var UP = 38
+      var DOWN = 40
+
       function log (result) {
         output.innerHTML += (result || '') + '\n'
       }
@@ -89,9 +93,30 @@
         return emulator.run(cmd).then(log, error)
       }
 
-      var ENTER = 13
+      var completeFunctions = {}
+      completeFunctions[UP] = emulator.completeUp
+      completeFunctions[DOWN] = emulator.completeDown
+
+      function complete (direction) {
+        var completeFunction = completeFunctions[direction]
+        if (!completeFunction) {
+          return
+        }
+        var cursorPosition = input.selectionStart
+        var beforeCursor = input.value.slice(0, cursorPosition)
+        completeFunction(beforeCursor).then(function (completion) {
+          if (completion) {
+            input.value = completion
+            input.setSelectionRange(cursorPosition, cursorPosition)
+          }
+        })
+      }
 
       input.addEventListener('keyup', function (e) {
+        if (e.which === UP || e.which === DOWN) {
+          complete(e.which)
+          return
+        }
         if (e.which !== ENTER) {
           return
         }

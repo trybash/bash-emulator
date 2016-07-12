@@ -1,4 +1,3 @@
-require('string.prototype.repeat')
 var addLineNumbers = require('../utils/lineNumber')
 
 // default width for number column

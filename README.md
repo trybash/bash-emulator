@@ -67,6 +67,16 @@ for bundling and minification in your own workflow.
   - Returns a Promise that resolves when clearing is done
 - `getDimensions() -> Promise(dimensions)`
   - Returns a Promise with an dimensions object `{ x, y }`
+- `completeUp(input) -> Promise(command)`
+  - Complete a command from history
+  - Can be called multiple times to go further back in history
+  - See [example]() for connecting arrow-keys with completion
+  - `str` command that should be completed
+  - Returns a Promise with a command, is `undefined` if no completion found
+- `completeDown(input) -> Promise(command)`
+  - Move in opposite direction to `completeUp`
+  - `str` command that should be completed
+  - Returns a Promise with a command, is `undefined` if no completion found
 - `commands`
   - An object with all commands that the emulator knows of
 - `state`
@@ -137,7 +147,6 @@ The API of the methods are designed to work with asynchronous implementations as
 
 ## Roadmap
 
-- up and down arrows
 - readline completion
 - patterns for path expansion
 - pipes

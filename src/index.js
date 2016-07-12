@@ -1,9 +1,15 @@
+require('array.prototype.findindex')
+require('string.prototype.startswith')
+require('string.prototype.includes')
+require('string.prototype.repeat')
 var pick = require('ramda/src/pick')
 var merge = require('ramda/src/merge')
 var commands = require('./commands')
 
 function bashEmulator (initialState) {
   var state = createState(initialState)
+  var completion = {}
+
   function getPath (path) {
     return joinPaths(state.workingDirectory, path)
   }
@@ -119,8 +125,32 @@ function bashEmulator (initialState) {
 
     getHistory: function () {
       return Promise.resolve(state.history)
+    },
+
+    completeUp: function (input) {
+      if (input !== completion.input) {
+        completion.input = input
+        completion.index = 0
+        completion.list = state.history.filter(function (item) {
+          return item.startsWith(input)
+        }).reverse()
+      } else if (completion.index < completion.list.length - 1) {
+        completion.index++
+      } else {
+        return Promise.resolve(undefined)
+      }
+      return Promise.resolve(completion.list[completion.index])
+    },
+
+    completeDown: function (input) {
+      if (input !== completion.input || !completion.index) {
+        return Promise.resolve(undefined)
+      }
+      completion.index--
+      return Promise.resolve(completion.list[completion.index])
     }
   }
+
   return emulator
 }
 
