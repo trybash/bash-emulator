@@ -70,7 +70,7 @@ for bundling and minification in your own workflow.
 - `completeUp(input) -> Promise(command)`
   - Complete a command from history
   - Can be called multiple times to go further back in history
-  - See [example]() for connecting arrow-keys with completion
+  - See [example](/index.html) for connecting arrow-keys with completion
   - `str` command that should be completed
   - Returns a Promise with a command, is `undefined` if no completion found
 - `completeDown(input) -> Promise(command)`
