@@ -166,19 +166,22 @@ The API of the methods are designed to work with asynchronous implementations as
 - [x] `cat`
     - [x] `-n`
 - [x] `clear`
+- [ ] `touch`
 - [ ] `mkdir`
     - [ ] `-p`
 - [ ] `mv`
+  - [ ] `-n`
 - [ ] `cp`
     - [ ] `-r`
+    - [ ] `-R`
 - [ ] `rm`
     - [ ] `-r`
+    - [ ] `-R`
 - [ ] `rmdir`
 
 #### Future
 
 - [ ] `echo`
-- [ ] `touch`
 - [ ] `head`
 - [ ] `tail`
 - [ ] `wc`
