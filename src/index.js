@@ -92,9 +92,19 @@ function bashEmulator (initialState) {
       return Promise.resolve(listing)
     },
 
-    // getStats: function (path) {
-    //   return Promise.resolve(state.fileSystem[path].meta)
-    // },
+    getStats: function (path) {
+      var filePath = getPath(path)
+      if (!state.fileSystem[filePath]) {
+        return Promise.reject(path + ': No such file or directory')
+      }
+
+      var pathParts = filePath.split('/')
+      return Promise.resolve({
+        modified: state.fileSystem[filePath].modified,
+        type: state.fileSystem[filePath].type,
+        name: pathParts[pathParts.length - 1]
+      })
+    },
 
     // createDir: function (path) {
       // TODO:

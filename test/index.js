@@ -206,6 +206,42 @@ test('removing', function (t) {
   })
 })
 
+test('getStats', function (t) {
+  t.plan(7)
+
+  var now = Date.now()
+
+  var emulator = bashEmulator({
+    workingDirectory: '/',
+    fileSystem: {
+      '/': {
+        type: 'dir',
+        modified: now
+      },
+      '/text.md': {
+        type: 'file',
+        modified: now,
+        content: 'Hey!'
+      }
+    }
+  })
+
+  emulator.getStats('/').then(function (stats) {
+    t.equal(stats.name, '', 'returns name')
+    t.equal(stats.type, 'dir', 'returns type')
+    t.equal(stats.modified, now, 'returns modified time')
+  })
+
+  emulator.getStats('/nope').then(null, function (err) {
+    t.equal(err, '/nope: No such file or directory', 'returns error for nonexistent')
+  })
+
+  emulator.getStats('text.md').then(function (stats) {
+    t.equal(stats.name, 'text.md', 'return filename')
+    t.equal(stats.type, 'file', 'returns filetype')
+    t.equal(stats.modified, now, 'return modified time')
+  })
+})
 test('completion', function (t) {
   t.plan(10)
 
