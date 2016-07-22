@@ -125,13 +125,35 @@ function bashEmulator (initialState) {
       //   - Returns a Promise that resolves when directory is created
     // },
 
-    // write: function (filePath, content) {
-      // TODO:
-      // - `write(filePath) -> Promise`
-      //   - If file isn't empty, content is appended to it.
-      //   - `filePath` path of file that should be written to. File doesn't have to exist.
-      //   - Returns a Promise that resolves when writing is done
-    // },
+    write: function (path, content) {
+      if (typeof content !== 'string') {
+        try {
+          content = JSON.stringify(content)
+        } catch (e) {
+          return Promise.reject(e)
+        }
+      }
+
+      return parentExists(path).then(function () {
+        var filePath = getPath(path)
+        return emulator.getStats(path).then(function (stats) {
+          if (stats.type === 'file') {
+            var oldContent = state.fileSystem[filePath].content
+            state.fileSystem[filePath].content = oldContent + content
+            return
+          }
+
+          return Promise.reject(filePath + ': Is a folder')
+        }, function () {
+          // file doesnt exist: write
+          state.fileSystem[filePath] = {
+            type: 'file',
+            modified: Date.now(),
+            content: content
+          }
+        })
+      })
+    },
 
     remove: function (path) {
       if (!state.fileSystem[path]) {

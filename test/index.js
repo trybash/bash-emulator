@@ -242,6 +242,72 @@ test('getStats', function (t) {
     t.equal(stats.modified, now, 'return modified time')
   })
 })
+
+test('write', function (t) {
+  t.plan(8)
+
+  var emulator = bashEmulator({
+    workingDirectory: '/',
+    fileSystem: {
+      '/': {
+        type: 'dir',
+        modified: Date.now()
+      },
+      '/home': {
+        type: 'file',
+        modified: Date.now()
+      },
+      '/exists': {
+        type: 'file',
+        modified: Date.now(),
+        content: '123'
+      },
+      '/folderExists': {
+        type: 'folder',
+        modified: Date.now()
+      }
+    }
+  })
+
+  emulator.write('touched', 'by an angel').then(function () {
+    t.ok(true, 'content can be string')
+  })
+
+  emulator.write('touched', {by: 'an angel'}).then(function () {
+    t.ok(true, 'content can be stringifyable')
+  })
+
+  emulator.write('touched', {
+    toJSON: function () { throw Error('Nein') }
+  }).then(null, function () {
+    t.ok(true, 'content can not be unstringifyable')
+  })
+
+  emulator.write('nonexistent/touched', 'by an angel').then(null, function (err) {
+    t.equal(err, '/nonexistent: No such file or directory', 'error if parent folder doesnt exist')
+  })
+
+  emulator.write('home/touched', 'by an angel').then(null, function (err) {
+    t.equal(err, '/home: Is not a directory', 'error if parent folder isnt a directory')
+  })
+
+  emulator.write('/exists', '456').then(function () {
+    return emulator.read('/exists')
+  }).then(function (content) {
+    t.equals(content, '123456', 'appends content to existent file')
+  })
+
+  emulator.write('/folderExists', '456').then(null, function (err) {
+    t.equals(err, '/folderExists: Is a folder', 'error if target file is a folder')
+  })
+
+  emulator.write('/new', '123').then(function () {
+    emulator.read('/new').then(function (content) {
+      t.equals(content, '123', 'writes new file if file doesnt exist')
+    })
+  })
+})
+
 test('completion', function (t) {
   t.plan(10)
 
