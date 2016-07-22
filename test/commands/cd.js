@@ -10,15 +10,15 @@ test('cd', function (t) {
     fileSystem: {
       '/': {
         type: 'dir',
-        lastEdited: Date.now()
+        modified: Date.now()
       },
       '/home': {
         type: 'dir',
-        lastEdited: Date.now()
+        modified: Date.now()
       },
       '/home/test': {
         type: 'dir',
-        lastEdited: Date.now()
+        modified: Date.now()
       }
     }
   }

@@ -11,28 +11,28 @@ test('ls', function (t) {
     fileSystem: {
       '/': {
         type: 'dir',
-        lastEdited: Date.now()
+        modified: Date.now()
       },
       '/etc': {
         type: 'dir',
-        lastEdited: Date.now()
+        modified: Date.now()
       },
       '/home': {
         type: 'dir',
-        lastEdited: Date.now()
+        modified: Date.now()
       },
       '/home/test': {
         type: 'dir',
-        lastEdited: Date.now()
+        modified: Date.now()
       },
       '/home/test/README': {
         type: 'file',
-        lastEdited: Date.now(),
+        modified: Date.now(),
         content: 'read this first'
       },
       '/home/test/.secret': {
         type: 'file',
-        lastEdited: Date.now(),
+        modified: Date.now(),
         content: 'this file is hidden'
       }
     }

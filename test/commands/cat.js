@@ -9,17 +9,17 @@ test('cat', function (t) {
     fileSystem: {
       '/1.txt': {
         type: 'file',
-        lastEdited: Date.now(),
+        modified: Date.now(),
         content: 'first'
       },
       '/2.txt': {
         type: 'file',
-        lastEdited: Date.now(),
+        modified: Date.now(),
         content: 'second'
       },
       '/3.txt': {
         type: 'file',
-        lastEdited: Date.now(),
+        modified: Date.now(),
         content: 'third'
       }
     }

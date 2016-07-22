@@ -16,15 +16,15 @@ test('initialise with state', function (t) {
     fileSystem: {
       '/': {
         type: 'dir',
-        lastEdited: Date.now()
+        modified: Date.now()
       },
       '/home': {
         type: 'dir',
-        lastEdited: Date.now()
+        modified: Date.now()
       },
       '/home/test': {
         type: 'dir',
-        lastEdited: Date.now()
+        modified: Date.now()
       }
     }
   }
@@ -97,11 +97,11 @@ test('reading files', function (t) {
     fileSystem: {
       '/': {
         type: 'dir',
-        lastEdited: Date.now()
+        modified: Date.now()
       },
       '/log.txt': {
         type: 'file',
-        lastEdited: Date.now(),
+        modified: Date.now(),
         content: 'some log'
       }
     }
@@ -127,23 +127,23 @@ test('reading a directory\'s content', function (t) {
     fileSystem: {
       '/': {
         type: 'dir',
-        lastEdited: Date.now()
+        modified: Date.now()
       },
       '/home': {
         type: 'dir',
-        lastEdited: Date.now()
+        modified: Date.now()
       },
       '/home/user': {
         type: 'dir',
-        lastEdited: Date.now()
+        modified: Date.now()
       },
       '/etc': {
         type: 'dir',
-        lastEdited: Date.now()
+        modified: Date.now()
       },
       '/tmp.log': {
         type: 'file',
-        lastEdited: Date.now(),
+        modified: Date.now(),
         content: 'log'
       }
     }
@@ -170,19 +170,19 @@ test('removing', function (t) {
     fileSystem: {
       '/': {
         type: 'dir',
-        lastEdited: Date.now()
+        modified: Date.now()
       },
       '/home': {
         type: 'dir',
-        lastEdited: Date.now()
+        modified: Date.now()
       },
       '/home/test': {
         type: 'dir',
-        lastEdited: Date.now()
+        modified: Date.now()
       },
       '/log.txt': {
         type: 'file',
-        lastEdited: Date.now(),
+        modified: Date.now(),
         content: 'some log'
       }
     }

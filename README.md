@@ -50,7 +50,7 @@ for bundling and minification in your own workflow.
   - Returns a Promise that resolves with an array of file names.
 - `getStats(path) -> Promise(stats)`
   - `path` optional path of file or directory. Defaults to current directory.
-  - Returns a Promise that resolves with a stats object. For now, only property is `lastEdited`.
+  - Returns a Promise that resolves with a stats object. For now, only property is `modified`.
 - `createDir(path) -> Promise`
   - `path` relative, non-existed path for new directory
   - Returns a Promise that resolves when directory is created
@@ -91,7 +91,7 @@ __It's not recommended to access the state directly. Use the above defined helpe
 - `workingDirectory` a string containing the current working directory (defaults to `/home/user`)
 - `fileSystem` an object that maps from absolute paths to directories or files.
   - Each value has a `type` property thats either `'dir'` or `'file'`
-    and a `lastEdited` property containing a unix timestamp
+    and a `modified` property containing a unix timestamp
   - Files also have a `content` property.
   - Default file system contains only directories for `/home/user`
 
