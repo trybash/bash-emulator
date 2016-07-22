@@ -14,6 +14,18 @@ function bashEmulator (initialState) {
     return joinPaths(state.workingDirectory, path)
   }
 
+  function parentExists (path) {
+    var parentPath = getPath(path).split('/').slice(0, -1).join('/')
+
+    return emulator.getStats(parentPath).then(function (stats) {
+      if (stats.type === 'dir') {
+        return Promise.resolve(true)
+      }
+
+      return Promise.reject(parentPath + ': Is not a directory')
+    })
+  }
+
   var emulator = {
     commands: commands,
 
