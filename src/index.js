@@ -140,6 +140,7 @@ function bashEmulator (initialState) {
           if (stats.type === 'file') {
             var oldContent = state.fileSystem[filePath].content
             state.fileSystem[filePath].content = oldContent + content
+            state.fileSystem[filePath].modified = Date.now()
             return
           }
 
