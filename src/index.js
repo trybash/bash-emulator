@@ -19,7 +19,7 @@ function bashEmulator (initialState) {
 
     return emulator.getStats(parentPath).then(function (stats) {
       if (stats.type === 'dir') {
-        return Promise.resolve(true)
+        return Promise.resolve()
       }
 
       return Promise.reject(parentPath + ': Is not a directory')
@@ -166,6 +166,18 @@ function bashEmulator (initialState) {
         }
       })
       return Promise.resolve()
+    },
+
+    rename: function (source, destination) {
+      var sourcePath = getPath(source)
+      var destinationPath = getPath(destination)
+      if (!state.fileSystem[sourcePath]) {
+        return Promise.reject(source + ': No such file or directory')
+      }
+      return parentExists(destinationPath).then(function () {
+        state.fileSystem[destinationPath] = state.fileSystem[sourcePath]
+        delete state.fileSystem[sourcePath]
+      })
     },
 
     getHistory: function () {

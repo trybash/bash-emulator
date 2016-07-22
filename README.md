@@ -59,8 +59,13 @@ for bundling and minification in your own workflow.
   - `filePath` path of file that should be written to. File doesn't have to exist.
   - Returns a Promise that resolves when writing is done
 - `remove(path) -> Promise`
-  - `path` path of file or directory to be deleting
+  - `path` path of file or directory to delete
   - Returns a Promise that resolves when deleting is done
+- `rename(source, destination) -> Promise`
+  -
+  - `source` path of file or directory to rename
+  - `destination` target path. Will be overwritten if existent.
+  - Returns a Promise that resolves when renaming is done
 - `getHistory() -> Promise([commands])`
   - Returns a Promise that resolves with a array containing all commands from the past
 - `clearScreen() -> Promise`
