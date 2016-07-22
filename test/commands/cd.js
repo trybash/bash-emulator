@@ -34,9 +34,9 @@ test('cd', function (t) {
   }).then(function (dir) {
     t.equal(dir, '/home', 'absolute path')
   }).then(function () {
-    return emulator.run('cd nonexistend')
+    return emulator.run('cd nonexistent')
   }).then(null, function (err) {
-    t.equal(err, '/home/nonexistend: No such file or directory', 'error message')
+    t.equal(err, '/home/nonexistent: No such file or directory', 'error message')
   })
 })
 

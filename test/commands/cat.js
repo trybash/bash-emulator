@@ -33,9 +33,9 @@ test('cat', function (t) {
     t.equal(output, res, 'cats multiple files')
   })
 
-  emulator.run('cat nonexistend /1.txt').then(null, function (err) {
+  emulator.run('cat nonexistent /1.txt').then(null, function (err) {
     var res =
-      'cat: nonexistend: No such file or directory' +
+      'cat: nonexistent: No such file or directory' +
       '\n' +
       'first'
     t.equal(err, res, 'with errors')

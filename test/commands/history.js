@@ -5,11 +5,11 @@ test('history', function (t) {
   t.plan(2)
   var emulator = bashEmulator()
   emulator.run('pwd').then(function () {
-    return emulator.run('nonexistend cmd')
+    return emulator.run('nonexistent cmd')
   }).then(null, function () {
     return emulator.run('history')
   }).then(function (history) {
-    t.equal(history, '    1  pwd\n    2  nonexistend cmd\n    3  history', 'appends to history')
+    t.equal(history, '    1  pwd\n    2  nonexistent cmd\n    3  history', 'appends to history')
   })
 
   var emulatorLong = bashEmulator({

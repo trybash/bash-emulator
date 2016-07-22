@@ -165,15 +165,15 @@ function defaultState () {
     fileSystem: {
       '/': {
         type: 'dir',
-        lastEdited: Date.now()
+        modified: Date.now()
       },
       '/home': {
         type: 'dir',
-        lastEdited: Date.now()
+        modified: Date.now()
       },
       '/home/user': {
         type: 'dir',
-        lastEdited: Date.now()
+        modified: Date.now()
       }
     },
     user: 'user',

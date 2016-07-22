@@ -34,8 +34,8 @@ test('initialise with state', function (t) {
 
 test('run missing command', function (t) {
   t.plan(1)
-  bashEmulator().run('nonexistend').then(null, function (err) {
-    t.equals(err, 'nonexistend: command not found', 'error when running missing comand')
+  bashEmulator().run('nonexistent').then(null, function (err) {
+    t.equals(err, 'nonexistent: command not found', 'error when running missing comand')
   })
 })
 
@@ -69,9 +69,9 @@ test('change working directory', function (t) {
   }).then(function (dir) {
     t.equal(dir, '/home/user', 'changes dir with chained path')
   }).then(function () {
-    return emulator.changeDir('nonexistend')
+    return emulator.changeDir('nonexistent')
   }).then(null, function (err) {
-    t.equal(err, '/home/user/nonexistend: No such file or directory', 'cannot change to non-existend dir')
+    t.equal(err, '/home/user/nonexistent: No such file or directory', 'cannot change to non-existent dir')
   })
 })
 
@@ -107,8 +107,8 @@ test('reading files', function (t) {
     }
   }
   var emulator = bashEmulator(testState)
-  emulator.read('nonexistend').then(null, function (err) {
-    t.equal(err, 'nonexistend: No such file or directory', 'cannot read missing file')
+  emulator.read('nonexistent').then(null, function (err) {
+    t.equal(err, 'nonexistent: No such file or directory', 'cannot read missing file')
   })
   emulator.read('/').then(null, function (err) {
     t.equal(err, '/: Is a directory', 'cannot read content of directory')
@@ -157,8 +157,8 @@ test('reading a directory\'s content', function (t) {
   emulator.readDir('/').then(function (listing) {
     t.deepEqual(listing, ['etc', 'home', 'tmp.log'], 'lists in order')
   })
-  emulator.readDir('nonexistend').then(null, function (err) {
-    t.equal(err, 'cannot access nonexistend: No such file or directory', 'error for missing file')
+  emulator.readDir('nonexistent').then(null, function (err) {
+    t.equal(err, 'cannot access nonexistent: No such file or directory', 'error for missing file')
   })
 })
 
@@ -188,8 +188,8 @@ test('removing', function (t) {
     }
   }
   var emulator = bashEmulator(testState)
-  emulator.remove('/nonexistend').then(null, function (err) {
-    t.equal(err, 'cannot remove ‘/nonexistend’: No such file or directory', 'cannot remove non-existend file')
+  emulator.remove('/nonexistent').then(null, function (err) {
+    t.equal(err, 'cannot remove ‘/nonexistent’: No such file or directory', 'cannot remove non-existent file')
   })
   emulator.remove('/log.txt').then(function () {
     return emulator.remove('/log.txt')

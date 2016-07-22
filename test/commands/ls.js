@@ -60,8 +60,8 @@ test('ls', function (t) {
     t.equal(output, listing, 'list multiple')
   })
 
-  emulator.run('ls nonexistend').then(null, function (err) {
-    t.equal(err, 'ls: cannot access nonexistend: No such file or directory', 'missing dir')
+  emulator.run('ls nonexistent').then(null, function (err) {
+    t.equal(err, 'ls: cannot access nonexistent: No such file or directory', 'missing dir')
   })
 
   emulator.run('ls /home/test').then(function (output) {
