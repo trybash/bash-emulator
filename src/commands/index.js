@@ -1,9 +1,10 @@
 var commands = {
-  ls: require('./ls'),
-  pwd: require('./pwd'),
+  cat: require('./cat'),
   cd: require('./cd'),
   history: require('./history'),
-  cat: require('./cat')
+  ls: require('./ls'),
+  mv: require('./mv'),
+  pwd: require('./pwd')
 }
 
 module.exports = commands

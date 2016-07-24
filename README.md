@@ -174,7 +174,7 @@ The API of the methods are designed to work with asynchronous implementations as
 - [ ] `touch`
 - [ ] `mkdir`
     - [ ] `-p`
-- [ ] `mv`
+- [x] `mv`
   - [ ] `-n`
 - [ ] `cp`
     - [ ] `-r`

@@ -162,50 +162,6 @@ test('reading a directory\'s content', function (t) {
   })
 })
 
-test('removing', function (t) {
-  t.plan(4)
-  var testState = {
-    history: [],
-    workingDirectory: '/',
-    fileSystem: {
-      '/': {
-        type: 'dir',
-        modified: Date.now()
-      },
-      '/home': {
-        type: 'dir',
-        modified: Date.now()
-      },
-      '/home/test': {
-        type: 'dir',
-        modified: Date.now()
-      },
-      '/log.txt': {
-        type: 'file',
-        modified: Date.now(),
-        content: 'some log'
-      }
-    }
-  }
-  var emulator = bashEmulator(testState)
-  emulator.remove('/nonexistent').then(null, function (err) {
-    t.equal(err, 'cannot remove ‘/nonexistent’: No such file or directory', 'cannot remove non-existent file')
-  })
-  emulator.remove('/log.txt').then(function () {
-    return emulator.remove('/log.txt')
-  }).then(null, function () {
-    t.ok(true, 'file is deleted')
-  })
-  emulator.remove('/home').then(function () {
-    emulator.remove('/home').then(null, function () {
-      t.ok(true, 'directory is deleted')
-    })
-    emulator.remove('/home/test').then(null, function () {
-      t.ok(true, 'sub-directory is deleted')
-    })
-  })
-})
-
 test('getStats', function (t) {
   t.plan(7)
 
@@ -308,6 +264,92 @@ test('write', function (t) {
   })
 })
 
+test('removing', function (t) {
+  t.plan(4)
+  var testState = {
+    history: [],
+    workingDirectory: '/',
+    fileSystem: {
+      '/': {
+        type: 'dir',
+        modified: Date.now()
+      },
+      '/home': {
+        type: 'dir',
+        modified: Date.now()
+      },
+      '/home/test': {
+        type: 'dir',
+        modified: Date.now()
+      },
+      '/log.txt': {
+        type: 'file',
+        modified: Date.now(),
+        content: 'some log'
+      }
+    }
+  }
+  var emulator = bashEmulator(testState)
+  emulator.remove('/nonexistent').then(null, function (err) {
+    t.equal(err, 'cannot remove ‘/nonexistent’: No such file or directory', 'cannot remove non-existent file')
+  })
+  emulator.remove('/log.txt').then(function () {
+    return emulator.remove('/log.txt')
+  }).then(null, function () {
+    t.ok(true, 'file is deleted')
+  })
+  emulator.remove('/home').then(function () {
+    emulator.remove('/home').then(null, function () {
+      t.ok(true, 'directory is deleted')
+    })
+    emulator.remove('/home/test').then(null, function () {
+      t.ok(true, 'sub-directory is deleted')
+    })
+  })
+})
+
+test('rename', function (t) {
+  t.plan(4)
+
+  var emulator = bashEmulator({
+    history: [],
+    workingDirectory: '/',
+    fileSystem: {
+      '/': {
+        type: 'dir',
+        modified: Date.now()
+      },
+      '/file.txt': {
+        type: 'file',
+        modified: Date.now(),
+        content: ''
+      },
+      '/log.txt': {
+        type: 'file',
+        modified: Date.now(),
+        content: 'some log'
+      }
+    }
+  })
+
+  emulator.rename('log.txt', 'log-archive.txt').then(function () {
+    emulator.getStats('log.txt').then(null, function () {
+      t.ok(true, 'old file is gone')
+    })
+    emulator.getStats('log-archive.txt').then(function () {
+      t.ok(true, 'new file is created')
+    })
+  })
+
+  emulator.rename('nonexistent', 'log-archive.txt').then(null, function (output) {
+    t.equal(output, 'nonexistent: No such file or directory', 'fails if source does not exist')
+  })
+
+  emulator.rename('file.txt', 'some/path').then(null, function (output) {
+    t.equal(output, '/some: No such file or directory', 'fails if destination is not in a directory')
+  })
+})
+
 test('completion', function (t) {
   t.plan(10)
 
@@ -357,8 +399,9 @@ test('completion', function (t) {
 //
 // running sub tests
 //
-require('./commands/pwd')
-require('./commands/ls')
+require('./commands/cat')
 require('./commands/cd')
 require('./commands/history')
-require('./commands/cat')
+require('./commands/ls')
+require('./commands/mv')
+require('./commands/pwd')
