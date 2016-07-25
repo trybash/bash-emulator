@@ -48,7 +48,7 @@ for bundling and minification in your own workflow.
 - `readDir(path) -> Promise([files])`
   - `path` optional, relative path of directory to read. Defaults to current directory.
   - Returns a Promise that resolves with an array of file names.
-- `getStats(path) -> Promise(stats)`
+- `stat(path) -> Promise(stats)`
   - `path` optional path of file or directory. Defaults to current directory.
   - Returns a Promise that resolves with a stats object. For now, only property is `modified`.
 - `createDir(path) -> Promise`

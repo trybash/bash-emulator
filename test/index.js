@@ -162,7 +162,7 @@ test('reading a directory\'s content', function (t) {
   })
 })
 
-test('getStats', function (t) {
+test('stat', function (t) {
   t.plan(7)
 
   var now = Date.now()
@@ -182,17 +182,17 @@ test('getStats', function (t) {
     }
   })
 
-  emulator.getStats('/').then(function (stats) {
+  emulator.stat('/').then(function (stats) {
     t.equal(stats.name, '', 'returns name')
     t.equal(stats.type, 'dir', 'returns type')
     t.equal(stats.modified, now, 'returns modified time')
   })
 
-  emulator.getStats('/nope').then(null, function (err) {
+  emulator.stat('/nope').then(null, function (err) {
     t.equal(err, '/nope: No such file or directory', 'returns error for nonexistent')
   })
 
-  emulator.getStats('text.md').then(function (stats) {
+  emulator.stat('text.md').then(function (stats) {
     t.equal(stats.name, 'text.md', 'return filename')
     t.equal(stats.type, 'file', 'returns filetype')
     t.equal(stats.modified, now, 'return modified time')
@@ -333,10 +333,10 @@ test('rename', function (t) {
   })
 
   emulator.rename('log.txt', 'log-archive.txt').then(function () {
-    emulator.getStats('log.txt').then(null, function () {
+    emulator.stat('log.txt').then(null, function () {
       t.ok(true, 'old file is gone')
     })
-    emulator.getStats('log-archive.txt').then(function () {
+    emulator.stat('log-archive.txt').then(function () {
       t.ok(true, 'new file is created')
     })
   })

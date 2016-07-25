@@ -17,7 +17,7 @@ function bashEmulator (initialState) {
   function parentExists (path) {
     var parentPath = getPath(path).split('/').slice(0, -1).join('/')
 
-    return emulator.getStats(parentPath).then(function (stats) {
+    return emulator.stat(parentPath).then(function (stats) {
       if (stats.type === 'dir') {
         return Promise.resolve()
       }
@@ -104,7 +104,7 @@ function bashEmulator (initialState) {
       return Promise.resolve(listing)
     },
 
-    getStats: function (path) {
+    stat: function (path) {
       var filePath = getPath(path)
       if (!state.fileSystem[filePath]) {
         return Promise.reject(path + ': No such file or directory')
@@ -136,7 +136,7 @@ function bashEmulator (initialState) {
 
       return parentExists(path).then(function () {
         var filePath = getPath(path)
-        return emulator.getStats(path).then(function (stats) {
+        return emulator.stat(path).then(function (stats) {
           if (stats.type === 'file') {
             var oldContent = state.fileSystem[filePath].content
             state.fileSystem[filePath].content = oldContent + content

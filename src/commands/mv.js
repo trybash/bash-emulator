@@ -15,7 +15,7 @@ function mv (env, args) {
 
   if (files.length === 1) {
     var file = files[0]
-    env.system.getStats(destination).then(function (stats) {
+    env.system.stat(destination).then(function (stats) {
       if (stats.type === 'dir') {
         var filePathParts = file.split('/')
         var fileName = filePathParts[filePathParts.length - 1]
@@ -36,7 +36,7 @@ function mv (env, args) {
   }
 
   // multiple files
-  env.system.getStats(destination).then(function (stats) {
+  env.system.stat(destination).then(function (stats) {
     if (stats.type !== 'dir') {
       return Promise.reject()
     }
