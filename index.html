@@ -48,9 +48,8 @@
     <script>
       var input = document.getElementById('input')
       var output = document.getElementById('output')
-      var savedState = JSON.parse(localStorage.bashEmulator || 'null')
 
-      var emulator = bashEmulator(savedState || {
+      var emulator = bashEmulator({
         workingDirectory: '/',
         fileSystem: {
           '/': {
@@ -90,13 +89,9 @@
         log('<div class="error">' + result + '</div>')
       }
 
-      function saveState () {
-        localStorage.bashEmulator = JSON.stringify(emulator.state)
-      }
-
       function run (cmd) {
         log('$ ' + cmd)
-        return emulator.run(cmd).then(log, error).then(saveState)
+        return emulator.run(cmd).then(log, error)
       }
 
       var completeFunctions = {}
