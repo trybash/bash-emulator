@@ -4,7 +4,8 @@ var commands = {
   history: require('./history'),
   ls: require('./ls'),
   mv: require('./mv'),
-  pwd: require('./pwd')
+  pwd: require('./pwd'),
+  touch: require('./touch')
 }
 
 module.exports = commands
