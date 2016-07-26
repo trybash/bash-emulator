@@ -198,6 +198,38 @@ test('stat', function (t) {
   })
 })
 
+test('createDir', function (t) {
+  t.plan(3)
+
+  var emulator = bashEmulator({
+    workingDirectory: '/',
+    fileSystem: {
+      '/': {
+        type: 'dir',
+        modified: Date.now()
+      },
+      '/existing': {
+        type: 'dir',
+        modified: Date.now()
+      }
+    }
+  })
+
+  emulator.createDir('mydir')
+    .then(function () {
+      return emulator.stat('/mydir')
+    })
+    .then(function (stat) {
+      t.equal(stat.name, 'mydir', 'created directory with right name')
+      t.equal(stat.type, 'dir', 'is a directory')
+    })
+
+  emulator.createDir('/existing')
+    .then(null, function (err) {
+      t.equal(err, 'cannot create directory \'/existing\': File exists', 'cannot overwrite existing file')
+    })
+})
+
 test('write', function (t) {
   t.plan(8)
 

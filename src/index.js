@@ -118,12 +118,19 @@ function bashEmulator (initialState) {
       })
     },
 
-    // createDir: function (path) {
-      // TODO:
-      // - `createDir(path) -> Promise`
-      //   - `path` relative, non-existed path for new directory
-      //   - Returns a Promise that resolves when directory is created
-    // },
+    createDir: function (path) {
+      return emulator.stat(path).then(function () {
+        return Promise.reject('cannot create directory \'' + path + '\': File exists')
+      }, function () {
+        return parentExists(path)
+      }).then(function () {
+        var dirPath = getPath(path)
+        state.fileSystem[dirPath] = {
+          type: 'dir',
+          modified: Date.now()
+        }
+      })
+    },
 
     write: function (path, content) {
       if (typeof content !== 'string') {
