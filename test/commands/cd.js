@@ -3,7 +3,7 @@ var bashEmulator = require('../../src')
 
 test('cd', function (t) {
   t.plan(3)
-  var testState = {
+  var emulator = bashEmulator({
     history: [],
     user: 'test',
     workingDirectory: '/',
@@ -21,8 +21,7 @@ test('cd', function (t) {
         modified: Date.now()
       }
     }
-  }
-  var emulator = bashEmulator(testState)
+  })
   emulator.run('cd').then(function () {
     return emulator.getDir()
   }).then(function (dir) {

@@ -3,10 +3,9 @@ var bashEmulator = require('../../src')
 
 test('pwd', function (t) {
   t.plan(1)
-  var testState = {
+  var emulator = bashEmulator({
     workingDirectory: '/'
-  }
-  var emulator = bashEmulator(testState)
+  })
   emulator.run('pwd').then(function (dir) {
     t.equal(dir, '/', 'returns working directory')
   })

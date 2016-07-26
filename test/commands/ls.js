@@ -4,7 +4,7 @@ var bashEmulator = require('../../src')
 test('ls', function (t) {
   t.plan(6)
 
-  var testState = {
+  var emulator = bashEmulator({
     history: [],
     user: 'test',
     workingDirectory: '/',
@@ -36,8 +36,7 @@ test('ls', function (t) {
         content: 'this file is hidden'
       }
     }
-  }
-  var emulator = bashEmulator(testState)
+  })
 
   emulator.run('ls').then(function (output) {
     t.equal(output, 'etc home', 'without args')

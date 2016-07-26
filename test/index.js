@@ -91,7 +91,7 @@ test('update history', function (t) {
 
 test('reading files', function (t) {
   t.plan(4)
-  var testState = {
+  var emulator = bashEmulator({
     history: [],
     workingDirectory: '/',
     fileSystem: {
@@ -105,8 +105,7 @@ test('reading files', function (t) {
         content: 'some log'
       }
     }
-  }
-  var emulator = bashEmulator(testState)
+  })
   emulator.read('nonexistent').then(null, function (err) {
     t.equal(err, 'nonexistent: No such file or directory', 'cannot read missing file')
   })
@@ -266,7 +265,7 @@ test('write', function (t) {
 
 test('removing', function (t) {
   t.plan(4)
-  var testState = {
+  var emulator = bashEmulator({
     history: [],
     workingDirectory: '/',
     fileSystem: {
@@ -288,8 +287,7 @@ test('removing', function (t) {
         content: 'some log'
       }
     }
-  }
-  var emulator = bashEmulator(testState)
+  })
   emulator.remove('/nonexistent').then(null, function (err) {
     t.equal(err, 'cannot remove ‘/nonexistent’: No such file or directory', 'cannot remove non-existent file')
   })
