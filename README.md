@@ -172,7 +172,7 @@ The API of the methods are designed to work with asynchronous implementations as
     - [x] `-n`
 - [x] `clear`
 - [x] `touch`
-- [ ] `mkdir`
+- [x] `mkdir`
     - [ ] `-p`
 - [x] `mv`
   - [ ] `-n`
