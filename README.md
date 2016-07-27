@@ -11,6 +11,8 @@ This might be useful for education purposes or even to ease the interaction with
 The system doesn't handle any UI interaction but provides hooks to communicate with other systems.
 It's easy to add new commands and customize the underlying file system.
 
+Also note that even though we try to create a realistic bash environment, this system won't behave identical to your local environment. Before using commands for other projects you should also try them with a real shell.
+
 
 
 ## Usage
