@@ -181,10 +181,10 @@ The API of the methods are designed to work with asynchronous implementations as
 - [ ] `cp`
     - [ ] `-r`
     - [ ] `-R`
-- [ ] `rm`
-    - [ ] `-r`
-    - [ ] `-R`
-- [ ] `rmdir`
+- [x] `rm`
+    - [x] `-r`
+    - [x] `-R`
+- [x] `rmdir`
 
 #### Future
 

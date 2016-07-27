@@ -2,7 +2,7 @@ var test = require('tape')
 var bashEmulator = require('../../src')
 
 test('rm', function (t) {
-  t.plan(7)
+  t.plan(8)
 
   var emulator = bashEmulator({
     workingDirectory: '/',
@@ -32,6 +32,18 @@ test('rm', function (t) {
         content: ''
       },
       '/somedir': {
+        type: 'dir',
+        modified: Date.now()
+      },
+      '/otherdir': {
+        type: 'dir',
+        modified: Date.now()
+      },
+      '/otherdir/sub': {
+        type: 'dir',
+        modified: Date.now()
+      },
+      '/moredir': {
         type: 'dir',
         modified: Date.now()
       }
@@ -68,14 +80,25 @@ test('rm', function (t) {
     t.equal(err, 'cannot remove ‘non/existent/path’: No such file or directory', 'fail with non-existent location')
   })
 
-  emulator.run('rm file4 non/existent/path somedir')
-    .then(null, function (err) {
-      t.equal(err, 'cannot remove ‘non/existent/path’: No such file or directory', 'fail with non-existent location')
-    })
+  emulator.run('rm -r /otherdir')
     .then(function () {
-      return emulator.stat('file4')
+      return emulator.stat('/otherdir/sub')
     })
     .then(null, function () {
-      t.ok(true, 'remove first file')
+      t.ok(true, 'remove sub-directory')
+    })
+    .then(function () {
+      return emulator.stat('/otherdir')
+    })
+    .then(null, function () {
+      t.ok(true, 'remove parent directory')
+    })
+
+  emulator.run('rm -R /moredir')
+    .then(function () {
+      return emulator.stat('/moredir')
+    })
+    .then(null, function () {
+      t.ok(true, 'remove directory with -R')
     })
 })

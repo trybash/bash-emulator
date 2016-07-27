@@ -1,4 +1,12 @@
 function rm (env, args) {
+  var rFlagIndex = args.findIndex(function (arg) {
+    return arg.toLowerCase() === '-r'
+  })
+  var recursive = rFlagIndex !== -1
+  if (recursive) {
+    args.splice(rFlagIndex, 1)
+  }
+
   if (!args.length) {
     env.error('rm: missing operand')
     env.exit(1)
@@ -9,7 +17,8 @@ function rm (env, args) {
     .all(args.map(function (path) {
       return env.system.stat(path)
         .then(function (stats) {
-          if (stats.type === 'dir') {
+          var isDir = stats.type === 'dir'
+          if (isDir && !recursive) {
             return Promise.reject('rm: cannot remove ‘' + path + '’: Is a directory')
           }
         }, function () {})
