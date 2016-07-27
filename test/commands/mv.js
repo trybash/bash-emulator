@@ -30,7 +30,7 @@ function emulator () {
 }
 
 test('mv', function (t) {
-  t.plan(19)
+  t.plan(25)
 
   emulator().run('mv').then(null, function (output) {
     t.equal(output, 'mv: missing file operand', 'fail without args')
@@ -115,22 +115,33 @@ test('mv', function (t) {
       t.equal(output, 'read this first', 'new README exists')
     })
 
-  // TODO:
-  // var mul5 = emulator()
-  // mul5.run('mv README non-existent /etc')
-  //   .then(null, function (output) {
-  //     t.equal(output, 'non-existent: No such file or directory', 'with multiple files and one failing others are still moved')
-  //     return mul5.read('README')
-  //   })
-  //   .then(function () {
-  //     console.log('why o why', arguments)
-  //   }, function (output) {
-  //     t.equal(output, 'README: No such file or directory', 'old README is gone')
-  //   })
-  //   .then(function () {
-  //     return mul5.read('etc/README')
-  //   })
-  //   .then(function (output) {
-  //     t.equal(output, 'read this first', 'new README exists')
-  //   })
+  var mul5 = emulator()
+  mul5.run('mv README non-existent /etc')
+    .then(null, function (output) {
+      t.equal(output, 'non-existent: No such file or directory', 'with multiple files and one failing others are still moved')
+      return mul5.read('README')
+    })
+    .then(function () {
+    }, function (output) {
+      t.equal(output, 'README: No such file or directory', 'old README is gone')
+    })
+    .then(function () {
+      return mul5.read('etc/README')
+    })
+    .then(function (output) {
+      t.equal(output, 'read this first', 'new README exists')
+    })
+
+  var mul6 = emulator()
+  mul6.run('mv -n README err.log')
+    .then(function (output) {
+      t.equal(output, '', 'no output on success')
+      return mul6.read('README')
+    })
+    .then(function (output) {
+      t.equal(output, 'read this first', 'source file is still there')
+      return mul6.read('err.log')
+    }).then(function (output) {
+      t.equal(output, 'some err', 'destination file unchanged')
+    })
 })

@@ -1,6 +1,15 @@
 var SINGLE_COPY = 'SINGLE_COPY'
 
 function mv (env, args) {
+  var nFlagIndex = args.findIndex(function (arg) {
+    return arg === '-n'
+  })
+
+  var noClobber = nFlagIndex !== -1
+  if (noClobber) {
+    args.splice(nFlagIndex, 1)
+  }
+
   if (!args.length) {
     env.error('mv: missing file operand')
     env.exit(1)
@@ -14,6 +23,15 @@ function mv (env, args) {
 
   var destination = args[args.length - 1]
   var files = args.slice(0, -1)
+
+  function rename (file, dest) {
+    if (noClobber) {
+      return env.system.stat(dest).catch(function () {
+        return env.system.rename(file, dest)
+      })
+    }
+    return env.system.rename(file, dest)
+  }
 
   env.system.stat(destination)
     .then(function (stats) {
@@ -29,13 +47,13 @@ function mv (env, args) {
     })
     .then(function (actionType) {
       if (actionType === SINGLE_COPY) {
-        return env.system.rename(files[0], destination)
+        return rename(files[0], destination)
       }
       return Promise.all(files.map(function (file) {
         var filePathParts = file.split('/')
         var fileName = filePathParts[filePathParts.length - 1]
         var dest = destination + '/' + fileName
-        return env.system.rename(file, dest)
+        return rename(file, dest)
       }))
     })
     .then(function () {
