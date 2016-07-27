@@ -89,6 +89,23 @@ for bundling and minification in your own workflow.
 - `state`
   - [See below](#the-state-object)
 
+
+### Built-in commands and flags
+
+- `ls -l -a`
+- `cd`
+- `pwd`
+- `history`
+- `cat -n`
+- `clear`
+- `touch`
+- `mkdir`
+- `mv -n`
+- `cp -r -R`
+- `rm -r -R`
+- `rmdir`
+
+
 ### The `state` object
 
 __It's not recommended to access the state directly. Use the above defined helper methods instead.__
@@ -147,58 +164,19 @@ The API of the methods are designed to work with asynchronous implementations as
 
 ## Development
 
+- Make sure you have [node.js](https://nodejs.org/) installed
 - Setup project using `npm install`
-- Make sure tests are running using `npm test`
+- Make sure tests are passing using `npm test`
 - Build the `bash-emulator.min.js` file with `npm run build`
 
 
-## Roadmap
+## Contribution
 
-- readline completion
-- patterns for path expansion
-- pipes
-- basic logic
-- simlinks
-- readline shortcuts
+We are happy to accept new contributions!
+Just make sure the tests are passing (`npm test`) and send a [Pull Request](https://github.com/trybash/bash-emulator/pull/new/gh-pages).
 
-
-### Built-in commands and flags
-
-- [x] `ls`
-    - [x] `-l`
-    - [x] `-a`
-- [x] `cd`
-- [x] `pwd`
-- [x] `history`
-- [x] `cat`
-    - [x] `-n`
-- [x] `clear`
-- [x] `touch`
-- [x] `mkdir`
-- [x] `mv`
-  - [x] `-n`
-- [x] `cp`
-    - [ ] `-r`
-    - [ ] `-R`
-- [x] `rm`
-    - [x] `-r`
-    - [x] `-R`
-- [x] `rmdir`
-
-#### Future
-
-- [ ] `mkdir -p`
-- [ ] `echo`
-- [ ] `head`
-- [ ] `tail`
-- [ ] `wc`
-- [ ] `sort`
-- [ ] `uniq`
-- [ ] `nl`
-- [ ] `tac`
-- [ ] `ln`
-- [ ] `less`
-- [ ] `man`
+If you are looking for a new feature to implement,
+make sure to have a look at our [roadmap](https://github.com/trybash/bash-emulator/labels/enhancement).
 
 
 ## Browser Support
