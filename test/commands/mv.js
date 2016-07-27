@@ -89,8 +89,8 @@ test('mv', function (t) {
     t.equal(output, 'mv: target ‘README’ is not a directory', 'fail if moving multiple files to file')
   })
 
-  emulator().run('mv README err.log /home/user').then(null, function (output) {
-    t.equal(output, 'mv: target ‘/home/user’ is not a directory', 'fail if moving multiple files to missing directory')
+  emulator().run('mv README err.log /non/existent').then(null, function (output) {
+    t.equal(output, 'mv: target ‘/non/existent’ is not a directory', 'fail if moving multiple files to missing directory')
   })
 
   var mul4 = emulator()
