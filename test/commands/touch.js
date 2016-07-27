@@ -2,7 +2,7 @@ var test = require('tape')
 var bashEmulator = require('../../src')
 
 test('touch', function (t) {
-  t.plan(6)
+  t.plan(8)
 
   var fileInitTime = Date.now()
 
@@ -14,6 +14,11 @@ test('touch', function (t) {
         modified: Date.now()
       },
       '/file.txt': {
+        type: 'file',
+        modified: fileInitTime,
+        content: 'first'
+      },
+      '/file2.txt': {
         type: 'file',
         modified: fileInitTime,
         content: 'first'
@@ -52,8 +57,20 @@ test('touch', function (t) {
       })
   }, 50)
 
-  emulator.run('touch non/existent/filepath')
-    .then(null, function (err) {
-      t.equal(err, '/non/existent: No such file or directory', 'fail with non-existent file location')
-    })
+  emulator.run('touch non/existent/filepath').then(null, function (err) {
+    t.equal(err, '/non/existent: No such file or directory', 'fail with non-existent file location')
+  })
+
+  setTimeout(function () {
+    emulator.run('touch file2.txt non/existent/filepath')
+      .then(null, function (err) {
+        t.equal(err, '/non/existent: No such file or directory', 'fail with non-existent file location')
+      })
+      .then(function () {
+        return emulator.stat('file2.txt')
+      })
+      .then(function (stat) {
+        t.notEqual(stat.modified, fileInitTime, 'update modifed timestamp of existing file')
+      })
+  }, 50)
 })

@@ -5,14 +5,16 @@ function touch (env, args) {
     return
   }
 
-  args.map(function (file) {
-    env.system.write(file, '').then(function () {
+  Promise
+    .all(args.map(function (file) {
+      return env.system.write(file, '')
+    }))
+    .then(function () {
       env.exit()
     }, function (err) {
       env.error(err)
       env.exit(1)
     })
-  })
 }
 
 module.exports = touch

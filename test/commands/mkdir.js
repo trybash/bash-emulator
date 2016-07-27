@@ -2,7 +2,7 @@ var test = require('tape')
 var bashEmulator = require('../../src')
 
 test('mkdir', function (t) {
-  t.plan(5)
+  t.plan(7)
 
   var emulator = bashEmulator({
     workingDirectory: '/',
@@ -36,13 +36,22 @@ test('mkdir', function (t) {
       t.equal(stat.name, 'dir2', 'second directory created')
     })
 
-  emulator.run('mkdir')
-    .then(null, function (output) {
-      t.equal(output, 'mkdir: missing operand', 'fail without argument')
-    })
+  emulator.run('mkdir').then(null, function (output) {
+    t.equal(output, 'mkdir: missing operand', 'fail without argument')
+  })
 
-  emulator.run('mkdir non/existent/path')
+  emulator.run('mkdir non/existent/path').then(null, function (err) {
+    t.equal(err, '/non/existent: No such file or directory', 'fail with non-existent location')
+  })
+
+  emulator.run('mkdir somedir non/existent/path')
     .then(null, function (err) {
       t.equal(err, '/non/existent: No such file or directory', 'fail with non-existent location')
+    })
+    .then(function () {
+      return emulator.stat('somedir')
+    })
+    .then(function (stat) {
+      t.equal(stat.type, 'dir', 'create at existing location')
     })
 })

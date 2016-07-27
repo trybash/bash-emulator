@@ -5,14 +5,16 @@ function mkdir (env, args) {
     return
   }
 
-  args.map(function (path) {
-    env.system.createDir(path).then(function () {
+  Promise
+    .all(args.map(function (path) {
+      return env.system.createDir(path)
+    }))
+    .then(function () {
       env.exit()
     }, function (err) {
       env.error(err)
       env.exit(1)
     })
-  })
 }
 
 module.exports = mkdir
