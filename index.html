@@ -121,6 +121,9 @@
         if (e.which !== ENTER) {
           return
         }
+        if (!input.value.length) {
+          return
+        }
         run(input.value).then(function () {
           input.value = ''
           document.body.scrollTop = 10e6
