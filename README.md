@@ -165,7 +165,7 @@ The API of the methods are designed to work with asynchronous implementations as
 ### Built-in commands and flags
 
 - [x] `ls`
-    - [ ] `-l`
+    - [x] `-l`
     - [x] `-a`
 - [x] `cd`
 - [x] `pwd`
@@ -177,8 +177,8 @@ The API of the methods are designed to work with asynchronous implementations as
 - [x] `mkdir`
     - [ ] `-p`
 - [x] `mv`
-  - [ ] `-n`
-- [ ] `cp`
+  - [x] `-n`
+- [x] `cp`
     - [ ] `-r`
     - [ ] `-R`
 - [x] `rm`

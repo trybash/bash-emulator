@@ -1,4 +1,11 @@
 // NOTE: No support for files yet
+
+var disclaimer =
+  '\n' +
+  'The output here is limited.' +
+  '\n' +
+  'On a real system you would also see file permissions, user, group, block size and more.'
+
 function ls (env, args) {
   var aFlagIndex = args.findIndex(function (arg) {
     return arg === '-a'
@@ -6,6 +13,18 @@ function ls (env, args) {
   var showHidden = aFlagIndex !== -1
   if (showHidden) {
     args.splice(aFlagIndex, 1)
+  }
+
+  var lFlagIndex = args.findIndex(function (arg) {
+    return arg === '-l'
+  })
+  var longFormat = lFlagIndex !== -1
+  if (longFormat) {
+    args.splice(lFlagIndex, 1)
+  }
+
+  if (!args.length) {
+    args.push('')
   }
 
   function excludeHidden (listing) {
@@ -17,27 +36,39 @@ function ls (env, args) {
     })
   }
 
-  var task
-  if (args.length < 2) {
-    task = env.system.readDir(args[0])
+  function formatListing (base, listing) {
+    if (!longFormat) {
+      return Promise.resolve(listing.join(' '))
+    }
+    return Promise.all(listing.map(function (filePath) {
+      console.log(base + '/' + filePath)
+      return env.system.stat(base + '/' + filePath).then(function (stats) {
+        var date = new Date(stats.modified)
+        var timestamp = date.toDateString().slice(4, 10) + ' ' + date.toTimeString().slice(0, 5)
+        return stats.type + '  ' + timestamp + '  ' + stats.name
+      })
+    })).then(function (lines) {
+      return 'total ' + lines.length + '\n' + lines.join('\n') + disclaimer
+    })
+  }
+
+  Promise.all(args.sort().map(function (path) {
+    return env.system.readDir(path)
       .then(excludeHidden)
       .then(function (listing) {
-        return listing.join(' ')
+        return formatListing(path, listing)
       })
-  } else {
-    task = Promise
-      .all(args.sort().map(function (path) {
-        return env.system.readDir(path)
-          .then(excludeHidden)
-          .then(function (listing) {
-            return path + ':\n' + listing.join(' ')
-          })
-      }))
-      .then(function (listings) {
-        return listings.join('\n\n')
+      .then(function (formattedListing) {
+        if (args.length === 1) {
+          return formattedListing
+        }
+        return path + ':\n' + formattedListing
       })
-  }
-  task.then(function (result) {
+  }))
+  .then(function (listings) {
+    return listings.join('\n\n')
+  })
+  .then(function (result) {
     env.output(result)
     env.exit()
   }, function (err) {
