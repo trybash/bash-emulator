@@ -14,6 +14,14 @@ function rmdir (env, args) {
           }
         }, function () {})
         .then(function () {
+          return env.system.readDir(path)
+        })
+        .then(function (files) {
+          if (files.length) {
+            return Promise.reject('rmdir: failed to remove ‘' + path + '’: Directory not empty')
+          }
+        })
+        .then(function () {
           return env.system.remove(path)
         })
     }))

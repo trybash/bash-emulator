@@ -88,7 +88,7 @@ function bashEmulator (initialState) {
     readDir: function (path) {
       var dir = getPath(path)
       if (!state.fileSystem[dir]) {
-        return Promise.reject('cannot access ' + path + ': No such file or directory')
+        return Promise.reject('cannot access ‘' + path + '’: No such file or directory')
       }
       var listing = Object.keys(state.fileSystem)
         .filter(function (path) {

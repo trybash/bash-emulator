@@ -195,7 +195,7 @@ test('reading a directory\'s content', function (t) {
   })
 
   emulator.readDir('nonexistent').then(null, function (err) {
-    t.equal(err, 'cannot access nonexistent: No such file or directory', 'error for missing file')
+    t.equal(err, 'cannot access ‘nonexistent’: No such file or directory', 'error for missing file')
   })
 })
 
