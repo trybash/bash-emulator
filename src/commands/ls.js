@@ -45,7 +45,12 @@ function ls (env, args) {
       return env.system.stat(base + '/' + filePath).then(function (stats) {
         var date = new Date(stats.modified)
         var timestamp = date.toDateString().slice(4, 10) + ' ' + date.toTimeString().slice(0, 5)
-        return stats.type + '  ' + timestamp + '  ' + stats.name
+        var type = stats.type
+        // Manual aligning for now
+        if (type === 'dir') {
+          type += ' '
+        }
+        return type + '  ' + timestamp + '  ' + stats.name
       })
     })).then(function (lines) {
       return 'total ' + lines.length + '\n' + lines.join('\n') + disclaimer

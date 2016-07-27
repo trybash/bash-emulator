@@ -75,9 +75,9 @@ test('ls', function (t) {
     var listing =
       'total 2' +
       '\n' +
-      'dir  Jun 27 17:30  etc' +
+      'dir   Jun 27 17:30  etc' +
       '\n' +
-      'dir  Jul 23 13:47  home' +
+      'dir   Jul 23 13:47  home' +
       '\n' +
       'The output here is limited.' +
       '\n' +
