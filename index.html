@@ -106,6 +106,7 @@
         var cursorPosition = input.selectionStart
         var beforeCursor = input.value.slice(0, cursorPosition)
         completeFunction(beforeCursor).then(function (completion) {
+          console.log('compl', direction, completion)
           if (completion) {
             input.value = completion
             input.setSelectionRange(cursorPosition, cursorPosition)
@@ -113,11 +114,17 @@
         })
       }
 
-      input.addEventListener('keyup', function (e) {
-        if (e.which === UP || e.which === DOWN) {
-          complete(e.which)
+      input.addEventListener('keydown', function (e) {
+        if (e.altKey || e.metaKey || e.shiftKey || e.ctrlKey) {
           return
         }
+        if (e.which === UP || e.which === DOWN) {
+          e.preventDefault()
+          complete(e.which)
+        }
+      })
+
+      input.addEventListener('keyup', function (e) {
         if (e.which !== ENTER) {
           return
         }

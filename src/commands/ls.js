@@ -41,7 +41,6 @@ function ls (env, args) {
       return Promise.resolve(listing.join(' '))
     }
     return Promise.all(listing.map(function (filePath) {
-      console.log(base + '/' + filePath)
       return env.system.stat(base + '/' + filePath).then(function (stats) {
         var date = new Date(stats.modified)
         var timestamp = date.toDateString().slice(4, 10) + ' ' + date.toTimeString().slice(0, 5)

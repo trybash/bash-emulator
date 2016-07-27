@@ -97,8 +97,6 @@ test('ls', function (t) {
       '\n' +
       'On a real system you would also see file permissions, user, group, block size and more.'
     t.equal(output, listing, 'combine -a and -l')
-  }, function () {
-    console.log(arguments)
   })
 })
 
