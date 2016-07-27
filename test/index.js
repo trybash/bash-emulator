@@ -431,6 +431,7 @@ test('completion', function (t) {
 //
 require('./commands/cat')
 require('./commands/cd')
+require('./commands/cp')
 require('./commands/history')
 require('./commands/ls')
 require('./commands/mkdir')

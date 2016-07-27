@@ -1,6 +1,7 @@
 var commands = {
   cat: require('./cat'),
   cd: require('./cd'),
+  cp: require('./cp'),
   history: require('./history'),
   ls: require('./ls'),
   mkdir: require('./mkdir'),
