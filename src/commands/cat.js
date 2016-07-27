@@ -12,20 +12,23 @@ function cat (env, args) {
   if (showNumbers) {
     args.splice(numberFlagIndex, 1)
   }
-  Promise.all(args.map(function (path) {
-    return env.system.read(path).then(null, function (err) {
-      exitCode = 1
-      return 'cat: ' + err
+  Promise
+    .all(args.map(function (path) {
+      return env.system.read(path).then(null, function (err) {
+        exitCode = 1
+        return 'cat: ' + err
+      })
+    }))
+    .then(function (contents) {
+      if (!showNumbers) {
+        return contents
+      }
+      return addLineNumbers(numColumnWidth, contents)
     })
-  })).then(function (contents) {
-    if (!showNumbers) {
-      return contents
-    }
-    return addLineNumbers(numColumnWidth, contents)
-  }).then(function (contents) {
-    env.output(contents.join('\n'))
-    env.exit(exitCode)
-  })
+    .then(function (contents) {
+      env.output(contents.join('\n'))
+      env.exit(exitCode)
+    })
 }
 
 module.exports = cat

@@ -119,17 +119,19 @@ function bashEmulator (initialState) {
     },
 
     createDir: function (path) {
-      return emulator.stat(path).then(function () {
-        return Promise.reject('cannot create directory \'' + path + '\': File exists')
-      }, function () {
-        return parentExists(path)
-      }).then(function () {
-        var dirPath = getPath(path)
-        state.fileSystem[dirPath] = {
-          type: 'dir',
-          modified: Date.now()
-        }
-      })
+      return emulator.stat(path)
+        .then(function () {
+          return Promise.reject('cannot create directory \'' + path + '\': File exists')
+        }, function () {
+          return parentExists(path)
+        })
+        .then(function () {
+          var dirPath = getPath(path)
+          state.fileSystem[dirPath] = {
+            type: 'dir',
+            modified: Date.now()
+          }
+        })
     },
 
     write: function (path, content) {
@@ -144,14 +146,12 @@ function bashEmulator (initialState) {
       return parentExists(path).then(function () {
         var filePath = getPath(path)
         return emulator.stat(path).then(function (stats) {
-          if (stats.type === 'file') {
-            var oldContent = state.fileSystem[filePath].content
-            state.fileSystem[filePath].content = oldContent + content
-            state.fileSystem[filePath].modified = Date.now()
-            return
+          if (stats.type !== 'file') {
+            return Promise.reject(filePath + ': Is a folder')
           }
-
-          return Promise.reject(filePath + ': Is a folder')
+          var oldContent = state.fileSystem[filePath].content
+          state.fileSystem[filePath].content = oldContent + content
+          state.fileSystem[filePath].modified = Date.now()
         }, function () {
           // file doesnt exist: write
           state.fileSystem[filePath] = {

@@ -25,15 +25,17 @@ function ls (env, args) {
         return listing.join(' ')
       })
   } else {
-    task = Promise.all(args.sort().map(function (path) {
-      return env.system.readDir(path)
-        .then(excludeHidden)
-        .then(function (listing) {
-          return path + ':\n' + listing.join(' ')
-        })
-    })).then(function (listings) {
-      return listings.join('\n\n')
-    })
+    task = Promise
+      .all(args.sort().map(function (path) {
+        return env.system.readDir(path)
+          .then(excludeHidden)
+          .then(function (listing) {
+            return path + ':\n' + listing.join(' ')
+          })
+      }))
+      .then(function (listings) {
+        return listings.join('\n\n')
+      })
   }
   task.then(function (result) {
     env.output(result)
