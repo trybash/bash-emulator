@@ -164,11 +164,12 @@ function bashEmulator (initialState) {
     },
 
     remove: function (path) {
-      if (!state.fileSystem[path]) {
+      var filePath = getPath(path)
+      if (!state.fileSystem[filePath]) {
         return Promise.reject('cannot remove ‘' + path + '’: No such file or directory')
       }
       Object.keys(state.fileSystem).forEach(function (key) {
-        if (key.startsWith(path)) {
+        if (key.startsWith(filePath)) {
           delete state.fileSystem[key]
         }
       })

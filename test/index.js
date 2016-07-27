@@ -323,16 +323,16 @@ test('removing', function (t) {
   emulator.remove('/nonexistent').then(null, function (err) {
     t.equal(err, 'cannot remove ‘/nonexistent’: No such file or directory', 'cannot remove non-existent file')
   })
-  emulator.remove('/log.txt').then(function () {
-    return emulator.remove('/log.txt')
-  }).then(null, function () {
-    t.ok(true, 'file is deleted')
+  emulator.remove('log.txt').then(function () {
+    return emulator.remove('/log.txt').then(null, function () {
+      t.ok(true, 'file is deleted')
+    })
   })
   emulator.remove('/home').then(function () {
-    emulator.remove('/home').then(null, function () {
+    emulator.remove('home').then(null, function () {
       t.ok(true, 'directory is deleted')
     })
-    emulator.remove('/home/test').then(null, function () {
+    emulator.remove('home/test').then(null, function () {
       t.ok(true, 'sub-directory is deleted')
     })
   })
