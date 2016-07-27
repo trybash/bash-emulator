@@ -5,3 +5,4 @@ sudo: false # Allows Travis to run this project in container
 branches:
   only:
     - gh-pages # otherwise branch is ignored
+    - /^greenkeeper-.*$/
