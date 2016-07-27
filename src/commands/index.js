@@ -8,6 +8,7 @@ var commands = {
   mv: require('./mv'),
   pwd: require('./pwd'),
   rm: require('./rm'),
+  rmdir: require('./rmdir'),
   touch: require('./touch')
 }
 
