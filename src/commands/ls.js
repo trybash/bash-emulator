@@ -24,7 +24,7 @@ function ls (env, args) {
   }
 
   if (!args.length) {
-    args.push('')
+    args.push('.')
   }
 
   function excludeHidden (listing) {
