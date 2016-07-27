@@ -175,7 +175,6 @@ The API of the methods are designed to work with asynchronous implementations as
 - [x] `clear`
 - [x] `touch`
 - [x] `mkdir`
-    - [ ] `-p`
 - [x] `mv`
   - [x] `-n`
 - [x] `cp`
@@ -188,6 +187,7 @@ The API of the methods are designed to work with asynchronous implementations as
 
 #### Future
 
+- [ ] `mkdir -p`
 - [ ] `echo`
 - [ ] `head`
 - [ ] `tail`
