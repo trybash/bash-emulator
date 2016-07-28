@@ -1,6 +1,14 @@
 var SINGLE_COPY = 'SINGLE_COPY'
 
 function cp (env, args) {
+  var rFlagIndex = args.findIndex(function (arg) {
+    return arg === '-r' || arg === '-R'
+  })
+  var isRecursive = rFlagIndex !== -1
+  if (isRecursive) {
+    args.splice(rFlagIndex, 1)
+  }
+
   if (!args.length) {
     env.error('cp: missing file operand')
     env.exit(1)
@@ -16,14 +24,12 @@ function cp (env, args) {
   var files = args.slice(0, -1)
 
   function copy (file, dest) {
-    return env.system.remove(dest)
-      .catch(function () {})
-      .then(function () {
-        return env.system.read(file)
-      })
-      .then(function (content) {
-        return env.system.write(dest, content)
-      })
+    return env.system.stat(file).then(function (stats) {
+      if (stats.type === 'dir' && !isRecursive) {
+        return Promise.reject('cp: omitting directory ‘' + file + '’')
+      }
+      return env.system.copy(file, dest)
+    })
   }
 
   env.system.stat(destination)

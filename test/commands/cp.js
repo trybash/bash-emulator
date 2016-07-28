@@ -2,7 +2,7 @@ var test = require('tape')
 var bashEmulator = require('../../src')
 
 test('cp', function (t) {
-  t.plan(20)
+  t.plan(25)
 
   var emulator = bashEmulator({
     history: [],
@@ -31,6 +31,14 @@ test('cp', function (t) {
       '/d': {
         type: 'dir',
         modified: Date.now()
+      },
+      '/e': {
+        type: 'dir',
+        modified: Date.now()
+      },
+      '/e/subdir': {
+        type: 'dir',
+        modified: Date.now()
       }
     }
   })
@@ -48,7 +56,7 @@ test('cp', function (t) {
   })
 
   emulator.run('cp d testdir').then(null, function (output) {
-    t.equal(output, 'd: Is a directory', 'fail copying a directory')
+    t.equal(output, 'cp: omitting directory ‘d’', 'fail copying a directory')
   })
 
   emulator.run('cp a aa')
@@ -117,5 +125,26 @@ test('cp', function (t) {
     })
     .then(function (output) {
       t.equal(output, 'ccc', 'new c exists')
+    })
+
+  emulator.run('cp -r e new-location')
+    .then(function (output) {
+      t.equal(output, '', 'copy directory')
+      return emulator.stat('e')
+    })
+    .then(function () {
+      t.ok(true, 'old directory is still there')
+      return emulator.stat('e/subdir')
+    })
+    .then(function () {
+      t.ok(true, 'old sub-directory is still there')
+      return emulator.stat('new-location')
+    })
+    .then(function () {
+      t.ok(true, 'create new directory')
+      return emulator.stat('new-location/subdir')
+    })
+    .then(function () {
+      t.ok(true, 'create new sub-directory')
     })
 })
