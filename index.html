@@ -106,7 +106,6 @@
         var cursorPosition = input.selectionStart
         var beforeCursor = input.value.slice(0, cursorPosition)
         completeFunction(beforeCursor).then(function (completion) {
-          console.log('compl', direction, completion)
           if (completion) {
             input.value = completion
             input.setSelectionRange(cursorPosition, cursorPosition)
@@ -135,6 +134,10 @@
           input.value = ''
           document.body.scrollTop = 10e6
         })
+      })
+
+      document.body.addEventListener('click', function () {
+        input.focus()
       })
 
       run('pwd').then(function () {
