@@ -12,7 +12,7 @@
     "build": "browserify src/browser-version.js | uglifyjs > bash-emulator.min.js",
     "test": "npm run lint && npm run cover",
     "lint": "standard",
-    "cover": "istanbul cover test/index.js && npm run check && echo 'For more see: coverage/lcov-report/index.html'",
+    "cover": "istanbul cover --report html test/index.js && npm run check && echo 'For more see: coverage/index.html'",
     "check": "istanbul check-coverage --statements 95"
   },
   "keywords": [
