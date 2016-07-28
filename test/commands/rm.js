@@ -2,7 +2,7 @@ var test = require('tape')
 var bashEmulator = require('../../src')
 
 test('rm', function (t) {
-  t.plan(8)
+  t.plan(9)
 
   var emulator = bashEmulator({
     workingDirectory: '/',
@@ -74,6 +74,10 @@ test('rm', function (t) {
 
   emulator.run('rm').then(null, function (output) {
     t.equal(output, 'rm: missing operand', 'fail without argument')
+  })
+
+  emulator.run('rm somedir').then(null, function (err) {
+    t.equal(err, 'rm: cannot remove ‘somedir’: Is a directory', 'fail removing directory')
   })
 
   emulator.run('rm non/existent/path').then(null, function (err) {

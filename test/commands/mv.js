@@ -30,7 +30,7 @@ function emulator () {
 }
 
 test('mv', function (t) {
-  t.plan(25)
+  t.plan(28)
 
   emulator().run('mv').then(null, function (output) {
     t.equal(output, 'mv: missing file operand', 'fail without args')
@@ -143,5 +143,18 @@ test('mv', function (t) {
       return mul6.read('err.log')
     }).then(function (output) {
       t.equal(output, 'some err', 'destination file unchanged')
+    })
+
+  var mul7 = emulator()
+  mul7.run('mv -n README new-location')
+    .then(function (output) {
+      t.equal(output, '', 'no output on success')
+      return mul7.read('README')
+    })
+    .then(null, function (output) {
+      t.ok(true, 'old file is gone')
+      return mul7.read('new-location')
+    }).then(function (output) {
+      t.equal(output, 'read this first', 'create new file')
     })
 })
