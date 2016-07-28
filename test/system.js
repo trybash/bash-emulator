@@ -383,7 +383,7 @@ test('removing', function (t) {
   })
 })
 
-test('rename', function (t) {
+test('copy', function (t) {
   t.plan(4)
 
   var emulator = bashEmulator({
@@ -407,20 +407,20 @@ test('rename', function (t) {
     }
   })
 
-  emulator.rename('log.txt', 'log-archive.txt').then(function () {
-    emulator.stat('log.txt').then(null, function () {
-      t.ok(true, 'old file is gone')
+  emulator.copy('log.txt', 'log-archive.txt').then(function () {
+    emulator.stat('log.txt').then(function () {
+      t.ok(true, 'old file is there')
     })
     emulator.stat('log-archive.txt').then(function () {
       t.ok(true, 'new file is created')
     })
   })
 
-  emulator.rename('nonexistent', 'log-archive.txt').then(null, function (output) {
+  emulator.copy('nonexistent', 'log-archive.txt').then(null, function (output) {
     t.equal(output, 'nonexistent: No such file or directory', 'fails if source does not exist')
   })
 
-  emulator.rename('file.txt', 'some/path').then(null, function (output) {
+  emulator.copy('file.txt', 'some/path').then(null, function (output) {
     t.equal(output, '/some: No such file or directory', 'fails if destination is not in a directory')
   })
 })

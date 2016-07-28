@@ -176,7 +176,7 @@ function bashEmulator (initialState) {
       return Promise.resolve()
     },
 
-    rename: function (source, destination) {
+    copy: function (source, destination) {
       var sourcePath = getPath(source)
       var destinationPath = getPath(destination)
       if (!state.fileSystem[sourcePath]) {
@@ -186,7 +186,6 @@ function bashEmulator (initialState) {
         if (key.startsWith(sourcePath)) {
           var destKey = key.replace(sourcePath, destinationPath)
           state.fileSystem[destKey] = state.fileSystem[key]
-          delete state.fileSystem[key]
         }
       }
       return parentExists(destinationPath).then(function () {

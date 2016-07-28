@@ -65,11 +65,10 @@ for bundling and minification in your own workflow.
 - `remove(path) -> Promise`
   - `path` path of file or directory to delete
   - Returns a Promise that resolves when deleting is done
-- `rename(source, destination) -> Promise`
-  -
-  - `source` path of file or directory to rename
+- `copy(source, destination) -> Promise`
+  - `source` path of file or directory to copy
   - `destination` target path. Will be overwritten if existent.
-  - Returns a Promise that resolves when renaming is done
+  - Returns a Promise that resolves when copying is done
 - `getHistory() -> Promise([commands])`
   - Returns a Promise that resolves with a array containing all commands from the past
 - `completeUp(input) -> Promise(command)`

@@ -27,10 +27,14 @@ function mv (env, args) {
   function rename (file, dest) {
     if (noClobber) {
       return env.system.stat(dest).catch(function () {
-        return env.system.rename(file, dest)
+        return env.system.copy(file, dest).then(function () {
+          return env.system.remove(file)
+        })
       })
     }
-    return env.system.rename(file, dest)
+    return env.system.copy(file, dest).then(function () {
+      return env.system.remove(file)
+    })
   }
 
   env.system.stat(destination)
