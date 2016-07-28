@@ -4,9 +4,11 @@
 
 This module can help you if you like to emulate a bash shell in plain Javascript.
 
-This might be useful for education purposes or even to ease the interaction with a back-end system.
+It might be useful for education purposes or even to ease the interaction with a back-end system.
 
 `bash-emulator` implements an environment for bash commands to run in and it also includes some default commands.
+The system it provides can be thought of like the *syscalls* of an operating system.
+Shell commands are programs running on top of this low-level primitives.
 
 The system doesn't handle any UI interaction but provides hooks to communicate with other systems.
 It's easy to add new commands and customize the underlying file system.
@@ -169,6 +171,11 @@ The API of the methods are designed to work with asynchronous implementations as
 ## Contribution
 
 We are happy to accept new contributions!
+
+It can be a fun experience to re-implement some programs you already know.
+This can give you some new insights in how they work.
+You can also try out [`strace`](http://jvns.ca/blog/2014/02/26/using-strace-to-avoid-reading-ruby-code/) to find out how commands work on your local system!
+
 Just make sure the tests are passing (`npm test`) and send a [Pull Request](https://github.com/trybash/bash-emulator/pull/new/gh-pages).
 
 If you are looking for a new feature to implement,
