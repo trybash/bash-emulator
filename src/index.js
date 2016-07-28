@@ -193,9 +193,13 @@ function bashEmulator (initialState) {
     },
 
     completeUp: function (input) {
-      if (input !== completion.input) {
+      var historyChanged = completion.historySize !== state.history.length
+      var inputChanged = input !== completion.input
+      if (inputChanged || historyChanged) {
+        // reset completion
         completion.input = input
         completion.index = 0
+        completion.historySize = state.history.length
         completion.list = state.history.filter(function (item) {
           return item.startsWith(input)
         }).reverse()
