@@ -182,14 +182,15 @@ function bashEmulator (initialState) {
       if (!state.fileSystem[sourcePath]) {
         return Promise.reject(source + ': No such file or directory')
       }
+      function renameAllSub (key) {
+        if (key.startsWith(sourcePath)) {
+          var destKey = key.replace(sourcePath, destinationPath)
+          state.fileSystem[destKey] = state.fileSystem[key]
+          delete state.fileSystem[key]
+        }
+      }
       return parentExists(destinationPath).then(function () {
-        Object.keys(state.fileSystem).forEach(function (key) {
-          if (key.startsWith(sourcePath)) {
-            var destKey = key.replace(sourcePath, destinationPath)
-            state.fileSystem[destKey] = state.fileSystem[key]
-            delete state.fileSystem[key]
-          }
-        })
+        Object.keys(state.fileSystem).forEach(renameAllSub)
       })
     },
 
