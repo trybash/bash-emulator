@@ -183,8 +183,13 @@ function bashEmulator (initialState) {
         return Promise.reject(source + ': No such file or directory')
       }
       return parentExists(destinationPath).then(function () {
-        state.fileSystem[destinationPath] = state.fileSystem[sourcePath]
-        delete state.fileSystem[sourcePath]
+        Object.keys(state.fileSystem).forEach(function (key) {
+          if (key.startsWith(sourcePath)) {
+            var destKey = key.replace(sourcePath, destinationPath)
+            state.fileSystem[destKey] = state.fileSystem[key]
+            delete state.fileSystem[key]
+          }
+        })
       })
     },
 

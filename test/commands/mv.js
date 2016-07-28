@@ -24,13 +24,21 @@ function emulator () {
         type: 'file',
         modified: Date.now(),
         content: 'some err'
+      },
+      '/somedir': {
+        type: 'dir',
+        modified: Date.now()
+      },
+      '/somedir/subdir': {
+        type: 'dir',
+        modified: Date.now()
       }
     }
   })
 }
 
 test('mv', function (t) {
-  t.plan(28)
+  t.plan(33)
 
   emulator().run('mv').then(null, function (output) {
     t.equal(output, 'mv: missing file operand', 'fail without args')
@@ -156,5 +164,29 @@ test('mv', function (t) {
       return mul7.read('new-location')
     }).then(function (output) {
       t.equal(output, 'read this first', 'create new file')
+    })
+
+  var mul8 = emulator()
+  mul8.run('mv somedir othername')
+    .then(function (output) {
+      t.equal(output, '', 'no output on success')
+      return mul8.stat('somedir')
+    })
+    .then(null, function () {
+      t.ok(true, 'old directory is gone')
+      return mul8.stat('somedir/subdir')
+    })
+    .then(null, function () {
+      t.ok(true, 'old sub-directory is gone')
+      return mul8.stat('othername')
+    })
+    .then(function () {
+      t.ok(true, 'directory is at new location')
+      return mul8.stat('othername/subdir')
+    }, function () {
+      console.log(arguments)
+    })
+    .then(function () {
+      t.ok(true, 'sub-directory has been moved too')
     })
 })
