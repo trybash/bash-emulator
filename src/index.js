@@ -2,8 +2,6 @@ require('array.prototype.findindex')
 require('string.prototype.startswith')
 require('string.prototype.includes')
 require('string.prototype.repeat')
-var pick = require('ramda/src/pick')
-var merge = require('ramda/src/merge')
 var commands = require('./commands')
 
 function bashEmulator (initialState) {
@@ -230,7 +228,15 @@ function bashEmulator (initialState) {
 
 function createState (initialState) {
   var state = defaultState()
-  return merge(state, pick(Object.keys(state), initialState || {}))
+  if (!initialState) {
+    return state
+  }
+  Object.keys(state).forEach(function (key) {
+    if (initialState[key]) {
+      state[key] = initialState[key]
+    }
+  })
+  return state
 }
 
 function defaultState () {
