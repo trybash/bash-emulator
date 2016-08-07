@@ -2,7 +2,7 @@ var test = require('tape')
 var bashEmulator = require('../../src')
 
 test('ls', function (t) {
-  t.plan(8)
+  t.plan(10)
 
   var emulator = bashEmulator({
     history: [],
@@ -86,6 +86,34 @@ test('ls', function (t) {
   })
 
   emulator.run('ls -l -a /home/test').then(function (output) {
+    var listing =
+      'total 2' +
+      '\n' +
+      'file  May 14 07:10  .secret' +
+      '\n' +
+      'file  Jan 01 03:35  README' +
+      '\n' +
+      'The output here is limited.' +
+      '\n' +
+      'On a real system you would also see file permissions, user, group, block size and more.'
+    t.equal(output, listing, 'combine -a and -l')
+  })
+
+  emulator.run('ls -la /home/test').then(function (output) {
+    var listing =
+      'total 2' +
+      '\n' +
+      'file  May 14 07:10  .secret' +
+      '\n' +
+      'file  Jan 01 03:35  README' +
+      '\n' +
+      'The output here is limited.' +
+      '\n' +
+      'On a real system you would also see file permissions, user, group, block size and more.'
+    t.equal(output, listing, 'combine -a and -l')
+  })
+
+  emulator.run('ls -al /home/test').then(function (output) {
     var listing =
       'total 2' +
       '\n' +

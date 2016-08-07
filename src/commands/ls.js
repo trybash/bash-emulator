@@ -23,6 +23,24 @@ function ls (env, args) {
     args.splice(lFlagIndex, 1)
   }
 
+  var laFlagIndex = args.findIndex(function (arg) {
+    return arg === '-la'
+  })
+  if (laFlagIndex !== -1) {
+    showHidden = true
+    longFormat = true
+    args.splice(laFlagIndex, 1)
+  }
+
+  var alFlagIndex = args.findIndex(function (arg) {
+    return arg === '-al'
+  })
+  if (alFlagIndex !== -1) {
+    showHidden = true
+    longFormat = true
+    args.splice(alFlagIndex, 1)
+  }
+
   if (!args.length) {
     args.push('.')
   }
