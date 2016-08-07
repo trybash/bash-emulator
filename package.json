@@ -1,6 +1,6 @@
 {
   "name": "bash-emulator",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Emulate a bash environment in plain js. Can be used in the browser.",
   "main": "src/index.js",
   "repository": {
