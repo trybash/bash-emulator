@@ -41,7 +41,7 @@
   "devDependencies": {
     "browserify": "^14.0.0",
     "istanbul": "^0.4.3",
-    "standard": "^8.0.0",
+    "standard": "^10.0.0",
     "tape": "^4.5.1",
     "uglify-js": "^2.7.0"
   }
