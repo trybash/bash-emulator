@@ -43,6 +43,6 @@
     "istanbul": "^0.4.3",
     "standard": "^8.0.0",
     "tape": "^4.5.1",
-    "uglify-js": "^2.7.0"
+    "uglify-js": "^3.0.3"
   }
 }
