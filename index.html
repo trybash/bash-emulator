@@ -2,31 +2,37 @@
   <head>
     <title>TryBash Emulator</title>
     <style>
-      body {
+      html, body {
         color: white;
+        font-size: 150%;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
       }
 
       body, #input {
         background: black;
-        font-size: 150%;
         font-family: monospace;
         line-height: 120%;
       }
 
       #output {
-        min-height: 92%;
         white-space: pre;
       }
 
       #input {
-        width: 100%;
-        height: 8%;
+        width: 90%;
         border: none;
-        color: lime;
+        font-size: inherit;
       }
 
       #input:focus {
         outline: none;
+      }
+
+      #input, .input-wrap {
+        color: lime;
       }
 
       .error {
@@ -38,7 +44,8 @@
 
     <div id="output"></div>
 
-    <div>
+    <div class="input-wrap">
+      <span>$</span>
       <input id="input" type="text" autofocus />
     </div>
 
@@ -138,6 +145,10 @@
       })
 
       document.body.addEventListener('click', function () {
+        // Prevent when user is selecting text
+        if (!window.getSelection().isCollapsed) {
+          return
+        }
         input.focus()
       })
 

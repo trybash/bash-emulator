@@ -94,7 +94,6 @@ for bundling and minification in your own workflow.
 - `pwd`
 - `history`
 - `cat -n`
-- `clear`
 - `touch`
 - `mkdir`
 - `mv -n`
