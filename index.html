@@ -1,6 +1,10 @@
+<!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
+
     <title>TryBash Emulator</title>
+
     <style>
       html, body {
         color: white;
@@ -85,12 +89,19 @@
         }
       })
 
+      emulator.commands.clear = function (env) {
+        output.innerHTML = ''
+        env.exit()
+      }
+
       var ENTER = 13
       var UP = 38
       var DOWN = 40
 
       function log (result) {
-        output.innerHTML += (result || '') + '\n'
+        if (result) {
+          output.innerHTML += result + '\n'
+        }
       }
 
       function error (result) {
