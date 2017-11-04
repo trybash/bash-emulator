@@ -15,6 +15,7 @@ It's easy to add new commands and customize the underlying file system.
 
 Also note that even though we try to create a realistic bash environment, this system won't behave identical to your local environment. Before using commands for other projects you should also try them with a real shell.
 
+If you are looking for a real terminal to run in your browser, have a look at [xterm.js](https://github.com/xtermjs/xterm.js).
 
 
 ## Usage
