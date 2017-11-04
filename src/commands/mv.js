@@ -1,6 +1,9 @@
 var SINGLE_COPY = 'SINGLE_COPY'
 
 function mv (env, args) {
+  // Ignore command name
+  args.shift()
+
   var nFlagIndex = args.findIndex(function (arg) {
     return arg === '-n'
   })

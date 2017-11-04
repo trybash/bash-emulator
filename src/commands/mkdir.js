@@ -1,4 +1,7 @@
 function mkdir (env, args) {
+  // Ignore command name
+  args.shift()
+
   if (!args.length) {
     env.error('mkdir: missing operand')
     env.exit(1)

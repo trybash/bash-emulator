@@ -44,6 +44,37 @@ test('run missing command', function (t) {
   })
 })
 
+test('run empty', function (t) {
+  t.plan(1)
+
+  bashEmulator().run('').then(function (output) {
+    t.equals(output, '\n', 'newline when running empty')
+  })
+})
+
+test('ignore whitespace', function (t) {
+  t.plan(3)
+
+  bashEmulator().run(' pwd ').then(function (output) {
+    t.equals(output, '/home/user', 'runs with leading space')
+  })
+
+  bashEmulator().run('    pwd').then(function (output) {
+    t.equals(output, '/home/user', 'runs with multiple spaces')
+  })
+
+  bashEmulator({
+    fileSystem: {
+      '/home': {
+        type: 'dir',
+        modified: Date.now()
+      }
+    }
+  }).run('ls   /home ').then(function (output) {
+    t.equals(output, '', 'ignores spaces between args')
+  })
+})
+
 test('change working directory', function (t) {
   t.plan(6)
 
@@ -479,4 +510,37 @@ test('completion', function (t) {
     .then(function (completion) {
       t.equal(completion, 'ls ..', 'completion is reset after command change')
     })
+})
+
+test('run with pipes', function (t) {
+  t.plan(7)
+  var emulator = bashEmulator()
+
+  emulator.run('pwd | cat | cat').then(function (output) {
+    t.equal(output, '/home/user\n', 'pipes work as expected')
+  })
+
+  emulator.run('ls | pwd').then(function (output) {
+    t.equal(output, '/home/user', 'pipe output is ignored if next has no stdin')
+  })
+
+  emulator.run('| cat').then(null, function (err) {
+    t.equal(err, "syntax error near unexpected token `|'", 'pipe requires input')
+  })
+
+  emulator.run('cat | | cat').then(null, function (err) {
+    t.equal(err, "syntax error near unexpected token `|'", 'all pipes require input')
+  })
+
+  emulator.run('cat |').then(null, function (err) {
+    t.equal(err, 'syntax error: unexpected end of file', 'pipe requires output')
+  })
+
+  emulator.run('pwd|cat|cat').then(function (output) {
+    t.equal(output, '/home/user\n', 'pipes work without whitespace')
+  })
+
+  emulator.run('pwd    | cat  |     cat').then(function (output) {
+    t.equal(output, '/home/user\n', 'pipes ignore whitespace')
+  })
 })

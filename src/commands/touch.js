@@ -1,4 +1,7 @@
 function touch (env, args) {
+  // Ignore command name
+  args.shift()
+
   if (!args.length) {
     env.error('touch: missing file operand')
     env.exit(1)

@@ -30,32 +30,75 @@ function bashEmulator (initialState) {
     state: state,
 
     run: function (input) {
-      var args = input.split(' ')
-      var cmd = args.shift()
       state.history.push(input)
-      if (!commands[cmd]) {
-        return Promise.reject(cmd + ': command not found')
+
+      var argsList = input.split('|').map(function (pipe) {
+        var args = pipe.trim().split(' ').filter(function (s) {
+          return s
+        })
+        return args
+      })
+
+      if (argsList.length === 1 && !argsList[0].length) {
+        return Promise.resolve('\n')
       }
+
+      if (!argsList[argsList.length - 1][0]) {
+        return Promise.reject('syntax error: unexpected end of file')
+      }
+
+      if (argsList.find(function (a) { return !a.length })) {
+        return Promise.reject("syntax error near unexpected token `|'")
+      }
+
+      var nonExistent = argsList.filter(function (args) {
+        var cmd = args[0]
+        return !commands[cmd]
+      })
+      if (nonExistent.length) {
+        return Promise.reject(nonExistent.map(function (args) {
+          return args[0] + ': command not found'
+        }).join('\n'))
+      }
+
       var result = ''
+
       return new Promise(function (resolve, reject) {
-        commands[cmd]({
-          output: function (str) {
-            result += str
-          },
-          // NOTE: For now we just redirect stderr to stdout
-          error: function (str) {
-            result += str
-          },
-          // NOTE: For now we don't use specific error codes
-          exit: function (code) {
-            if (code) {
-              reject(result)
-            } else {
-              resolve(result)
-            }
-          },
-          system: emulator
-        }, args)
+        var pipes = argsList.map(function (args, idx) {
+          var isLast = idx === argsList.length - 1
+          return commands[args[0]]({
+            output: function (str) {
+              if (isLast) {
+                result += str
+                return
+              }
+              var nextInput = pipes[idx + 1] && pipes[idx + 1].input
+              if (nextInput) {
+                nextInput(str)
+              }
+            },
+            // NOTE: For now we just redirect stderr to stdout
+            error: function (str) {
+              result += str
+            },
+            // NOTE: For now we don't use specific error codes
+            exit: function (code) {
+              if (isLast) {
+                if (code) {
+                  reject(result)
+                } else {
+                  resolve(result)
+                }
+                return
+              }
+              var nextClose = pipes[idx + 1] && pipes[idx + 1].close
+              if (nextClose) {
+                nextClose()
+              }
+            },
+            system: emulator
+          }, args)
+        })
       })
     },
 

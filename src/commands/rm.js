@@ -1,4 +1,7 @@
 function rm (env, args) {
+  // Ignore command name
+  args.shift()
+
   var rFlagIndex = args.findIndex(function (arg) {
     return arg.toLowerCase() === '-r'
   })

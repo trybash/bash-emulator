@@ -87,8 +87,9 @@ for bundling and minification in your own workflow.
   - [See below](#the-state-object)
 
 
-### Built-in commands and flags
+### Built-in features, commands and flags
 
+- pipes `|`
 - `ls -l -a`
 - `cd`
 - `pwd`

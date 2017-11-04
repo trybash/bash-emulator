@@ -1,4 +1,7 @@
 function rmdir (env, args) {
+  // Ignore command name
+  args.shift()
+
   if (!args.length) {
     env.error('rmdir: missing operand')
     env.exit(1)

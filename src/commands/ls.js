@@ -7,6 +7,9 @@ var disclaimer =
   'On a real system you would also see file permissions, user, group, block size and more.'
 
 function ls (env, args) {
+  // Ignore command name
+  args.shift()
+
   var aFlagIndex = args.findIndex(function (arg) {
     return arg === '-a'
   })

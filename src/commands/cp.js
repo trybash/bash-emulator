@@ -1,6 +1,9 @@
 var SINGLE_COPY = 'SINGLE_COPY'
 
 function cp (env, args) {
+  // Ignore command name
+  args.shift()
+
   var rFlagIndex = args.findIndex(function (arg) {
     return arg === '-r' || arg === '-R'
   })

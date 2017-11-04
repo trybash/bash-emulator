@@ -1,11 +1,11 @@
-var addLineNumbers = require('../utils/lineNumber')
+var lineNumber = require('../utils/lineNumber')
 
 // default width for number column
 var numColumnWidth = 5
 
 function history (env) {
   env.system.getHistory().then(function (history) {
-    env.output(addLineNumbers(numColumnWidth, history).join('\n'))
+    env.output(lineNumber.addLineNumbers(numColumnWidth, history).join('\n'))
     env.exit()
   })
 }
